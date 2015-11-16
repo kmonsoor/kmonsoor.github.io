@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kmonsoor's tech posts</title><link href="http://blog.kmonsoor.com/" rel="alternate"></link><link href="http://blog.kmonsoor.com/feeds/coding-configuration-internet-linux-python-software-web.atom.xml" rel="self"></link><id>http://blog.kmonsoor.com/</id><updated>2014-05-02T17:01:00+06:00</updated><entry><title>pep8_tonizer on for Notepad++ : Make your Python code PEP8-compliant on editor</title><link href="http://blog.kmonsoor.com/pep8_tonizer-on-for-notepad-make-your-python-code-pep8-compliant-on-editor.html" rel="alternate"></link><updated>2014-05-02T17:01:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-05-02:pep8_tonizer-on-for-notepad-make-your-python-code-pep8-compliant-on-editor.html</id><summary type="html">&lt;p&gt;&lt;em&gt;[ Please take note that this is still in beta phase. In other words, it
+still has issues.]&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This script can be used to make python code, that is being edited on
+Notepad++,  to comply with infamous PEP8 coding style
+ [&lt;a href="http://bit.ly/pep8"&gt;http://bit.ly/pep8&lt;/a&gt;]&lt;br /&gt;
+By default, autopep8 only makes whitespace changes. So does this
+script.&lt;/p&gt;
+&lt;p&gt;However, this script depends on following:&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href="http://npppythonscript.sourceforge.net"&gt;Python Script for
+Notepad++&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This create the runtime environment for executing python scripts on
+Notepad++ objects. Install by downloading via:
+  &lt;a href="http://npppythonscript.sourceforge.net/download.shtml"&gt;http://npppythonscript.sourceforge.net/download.shtml&lt;/a&gt;&lt;br /&gt;
+(better choose the *.msi option)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="http://pypi.python.org/pypi/autopep8"&gt;autopep8&lt;/a&gt;&lt;/strong&gt;&lt;br /&gt;
+This is the main library module for checking &amp;amp; converting to
+PEP8-complying code. It, in turn, depends on
+&lt;a href="https://github.com/jcrocholl/pep8"&gt;pep8&lt;/a&gt;package.&lt;br /&gt;
+Installing steps via pip:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;pip install --upgrade pep8&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;pip install --upgrade autopep8&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Installation&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install&lt;strong&gt;pep8&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Install &lt;strong&gt;autopep8&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;install &lt;strong&gt;Python Script&lt;/strong&gt; for Notepad++&lt;/li&gt;
+&lt;li&gt;download &lt;a href="http://bit.ly/pep8_tonizer"&gt;&lt;strong&gt;pep8_tonizer.py&lt;/strong&gt;&lt;/a&gt; to a
+    convenient location&lt;/li&gt;
+&lt;li&gt;find &amp;amp; copy pep8.py &amp;amp; autopep8.py to \&amp;lt;Notepad++ install
+    dir&gt;\\plugins\PythonScript\lib&lt;/li&gt;
+&lt;li&gt;start notepad++&lt;/li&gt;
+&lt;li&gt;Go to Menu &gt;&gt; Plugins &gt;&gt; Python Script&lt;/li&gt;
+&lt;li&gt;click "New script"&lt;/li&gt;
+&lt;li&gt;find &amp;amp; select "pep8_tonizer.py"&lt;/li&gt;
+&lt;li&gt;Good job, all set.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Usage&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;After opening / creating any python source file,&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Go to Menu &gt;&gt; Plugins &gt;&gt; Python Script &gt;&gt; Scripts&lt;/li&gt;
+&lt;li&gt;Click "pep8_tonizer.py"&lt;/li&gt;
+&lt;li&gt;Whoa !&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;TODO list&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;adding options for autopep8 style configurations, currently it works
+    as default&lt;/li&gt;
+&lt;li&gt;automate the setup processes(dependency check as well) as much as
+    possible&lt;/li&gt;
+&lt;li&gt;integrate the whole process into just 1 or 2 steps&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;hope, you will enjoy !&lt;/p&gt;</summary><category term="coding"></category><category term="editor"></category><category term="extension"></category><category term="free"></category><category term="ide"></category><category term="notepad++"></category><category term="pep8"></category><category term="plugin"></category><category term="programming"></category><category term="programming style"></category><category term="python"></category><category term="styleguide"></category><category term="tips"></category><category term="unofficial"></category><category term="web"></category><category term="windows"></category></entry></feed>

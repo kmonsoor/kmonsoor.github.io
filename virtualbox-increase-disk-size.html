@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="/theme/css/style.less">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="stylesheet" type="text/css" href="/theme/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Sans|PT+Serif|PT+Mono">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Khaled Monsoor">
+  <meta name="description" content="Posts and writings by Khaled Monsoor">
+
+
+<meta name="keywords" content="enterprise-it, linux, opensuse, software, Step-by-step, suse, technology, vdi, virtual disk, virtualbox, vmware, windows 7">
+
+  <title>
+    kmonsoor's tech posts
+&ndash; Increase virtual disk size in VirtualBox, host: Windows 7, Guest: OpenSuse. Format: Step-by-step  </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20431143-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+  <aside>
+    <div id="user_meta">
+      <a href="">
+        <img src="/static/images/your_logo.png" alt="logo">
+      </a>
+      <h2><a href="">Khaled Monsoor</a></h2>
+      <p></p>
+      <ul>
+        <li><a href="/pages/about-khaled-monsoor.html">About</a></li>
+        <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+        <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+        <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+        <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        <li><a href="#" target="_blank">You can add links in your config file</a></li>
+        <li><a href="#" target="_blank">Another social link</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <p>
+      <a href="">Index</a> &brvbar; <a href="/archives.html">Archives</a>
+      </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h3><a href="/virtualbox-increase-disk-size.html">Increase virtual disk size in VirtualBox, host: Windows 7, Guest: OpenSuse. Format: Step-by-step</a></h3>
+  </div>
+  <div class="article_text">
+    <div>
+
+[![](http://kmonsoor.files.wordpress.com/2012/05/virtualbox_logo_small.jpg "Virtualbox_logo_small")](http://kmonsoor.files.wordpress.com/2012/05/virtualbox_logo_small.jpg)
+
+</div>
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+<div>
+
+   Stuck with your small virtual disk partition for VirtualBox? You
+created for some testing & practicing, now it needs space. I also stuck
+with same problem; researched many forums, and here is the gist. Find
+out how \>\>\>
+
+</div>
+
+<!--more-->
+
+<p><strong>[ Update</strong>: (Thanks to user, Suman) This procedure <strong>won't work for VM
+with snapshots</strong>. So, plz take note about your system beforehand. <strong>]</strong></p>
+<ul>
+<li>Download <a href="http://sourceforge.net/projects/gparted/"><strong><em>Gparted</em></strong>, disk manager for
+    Linux</a>. It'll come as an
+    ISO file.</li>
+<li>Boot into your guest OS, check,  with <strong><em>df</em></strong> command,  which
+    partition you need to grow. Take note of that specific mounted HD,
+    such as /dev/hdb/sda3</li>
+<li>Take backup of your existing data, as I <strong>WILL NOT</strong> TAKE ANY
+    RESPONSIBILITY IF YOU DAMAGE YOUR DATA.</li>
+<li>In host OS, Goto the command prompt by running, <strong><em>cmd.exe</em></strong></li>
+<li>Navigate to the Virtualbox installation folder</li>
+<li>Execute command:<em>VBoxManage modifyhd
+    X:\yourVM_DiskPath_InHost\yourVM_Disk.vdi  --resize 40960</em> you
+    will see progress as below:</li>
+<li><a href="http://kmonsoor.files.wordpress.com/2012/05/screenshot002.png"><img alt="" src="https://kmonsoor.files.wordpress.com/2012/05/screenshot002.png" title="ScreenShot002" /></a></li>
+</ul>
+<!-- -->
+
+<ul>
+<li>If you fail with message like <strong><em>"VBoxManage.exe: error: Resize hard
+    disk operation for this format is not impleme</em></strong><br />
+<strong><em>nted yet!</em></strong>", you need to use this tool
+    (<a href="https://forums.virtualbox.org/download/file.php?id=7579">CloneVDI.exe</a>)
+    from this <a href="https://forums.virtualbox.org/viewtopic.php?f=6&amp;t=22422">VirtualBox
+    forum-post</a>.
+    If using this tool, <strong>remember</strong> to check "<strong>Increase virtual drive
+    size to</strong> " with your desired size.</li>
+<li><a href="https://forums.virtualbox.org/download/file.php?id=7579"><img alt="VDI_tool" src="https://kmonsoor.files.wordpress.com/2012/05/vdi_tool.png" /></a></li>
+<li>Now, Load the ISO file to the CD/DVD drive of your virtual Linux</li>
+<li><p>
+    [caption id="attachment_185" align="aligncenter"
+    width="375"]<a href="http://kmonsoor.files.wordpress.com/2012/05/mysuse-gparted.png"><img alt="" src="http://kmonsoor.files.wordpress.com/2012/05/mysuse-gparted.png" title="GParted ISO loaded" /></a>
+    GParted.iso loaded on IDE Primary Master[/caption]</li>
+<li>Boot the Guest OS; from the boot menu, select CD/DVD drive, then it
+    will be booted in GParted tiny OS,</li>
+<li>Now the PartitionManager tool will come up automatically, like
+    below:</li>
+<li><a href="http://kmonsoor.files.wordpress.com/2012/05/gparted.jpg"><img alt="" src="http://kmonsoor.files.wordpress.com/2012/05/gparted.jpg?w=300" title="gparted" /></a></li>
+<li>Now shrink/Grow or Move your desired partion, but be careful. Don't
+    rename them and care about your data.</li>
+<li>Don't worry, unless you clicked <strong><em>Apply</em></strong>, nothing has happened
+    really. When you are done with moving and resizing, you have to
+    click <strong><em>Apply</em></strong>to commit the change</li>
+<li><a href="http://kmonsoor.files.wordpress.com/2012/05/gparted11.jpg"><img alt="" src="http://kmonsoor.files.wordpress.com/2012/05/gparted11.jpg?w=300" title="gparted11" /></a></li>
+<li>when completed, close Gparted, and then shutdown the OS</li>
+<li>Unload the ISO aka virtual CD from virtual OS</li>
+<li>Boot into the OS again</li>
+<li>Now, check that if the desired partition grew or not by df command</li>
+</ul>
+<p>Thanks for visiting my blog. Please don't forget to "Like" or "+1" be
+clicking below.  Also, your suggestion or comment would be greatly
+helpful.</p>
+<p>You may also like to encourage me by <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=4H7BX94Z8MW9W">buying me a
+coffee</a>.</p>
+  </div>
+  <div class="article_meta">
+    <p>Posted on: Sat 26 May 2012</p>
+    <p>Category: <a href="/category/configuration-freeware-linux-software-tutorial-windows-7.html">configuration, freeware, Linux, software, tutorial, Windows 7</a>
+ &ndash; Tags:
+      <a href="/tag/enterprise-it.html">enterprise-it</a>,      <a href="/tag/linux.html">linux</a>,      <a href="/tag/opensuse.html">opensuse</a>,      <a href="/tag/software.html">software</a>,      <a href="/tag/step-by-step.html">Step-by-step</a>,      <a href="/tag/suse.html">suse</a>,      <a href="/tag/technology.html">technology</a>,      <a href="/tag/vdi.html">vdi</a>,      <a href="/tag/virtual-disk.html">virtual disk</a>,      <a href="/tag/virtualbox.html">virtualbox</a>,      <a href="/tag/vmware.html">vmware</a>,      <a href="/tag/windows-7.html">windows 7</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "virtualbox-increase-disk-size.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://kmonsoor.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+      <p>&copy; Khaled Monsoor. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/gfidente/pelican-svbhack" target="_blank">github</a>. Member of the <a href="http://internetdefenseleague.org">Internet Defense League</a>.</p>
+    </div>
+  </main>
+<script type="text/javascript">
+  window._idl = {};
+  _idl.variant = "banner";
+  (function() {
+    var idl = document.createElement('script');
+    idl.type = 'text/javascript';
+    idl.async = true;
+    idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+    document.getElementsByTagName('body')[0].appendChild(idl);
+  })();
+</script>
+</body>
+</html>

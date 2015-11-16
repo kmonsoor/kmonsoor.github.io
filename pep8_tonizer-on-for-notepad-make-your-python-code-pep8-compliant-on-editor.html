@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="/theme/css/style.less">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="stylesheet" type="text/css" href="/theme/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Sans|PT+Serif|PT+Mono">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Khaled Monsoor">
+  <meta name="description" content="Posts and writings by Khaled Monsoor">
+
+
+<meta name="keywords" content="coding, editor, extension, free, ide, notepad++, pep8, plugin, programming, programming style, python, styleguide, tips, unofficial, web, windows">
+
+  <title>
+    kmonsoor's tech posts
+&ndash; pep8_tonizer on for Notepad++ :  Make your Python code PEP8-compliant on editor  </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20431143-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+  <aside>
+    <div id="user_meta">
+      <a href="">
+        <img src="/static/images/your_logo.png" alt="logo">
+      </a>
+      <h2><a href="">Khaled Monsoor</a></h2>
+      <p></p>
+      <ul>
+        <li><a href="/pages/about-khaled-monsoor.html">About</a></li>
+        <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+        <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+        <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+        <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        <li><a href="#" target="_blank">You can add links in your config file</a></li>
+        <li><a href="#" target="_blank">Another social link</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <p>
+      <a href="">Index</a> &brvbar; <a href="/archives.html">Archives</a>
+      </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h3><a href="/pep8_tonizer-on-for-notepad-make-your-python-code-pep8-compliant-on-editor.html">pep8_tonizer on for Notepad++ :  Make your Python code PEP8-compliant on editor</a></h3>
+  </div>
+  <div class="article_text">
+    <p><em>[ Please take note that this is still in beta phase. In other words, it
+still has issues.]</em></p>
+<p>This script can be used to make python code, that is being edited on
+Notepad++,  to comply with infamous PEP8 coding style
+ [<a href="http://bit.ly/pep8">http://bit.ly/pep8</a>]<br />
+By default, autopep8 only makes whitespace changes. So does this
+script.</p>
+<p>However, this script depends on following:</p>
+<!--more-->
+
+<p><strong><a href="http://npppythonscript.sourceforge.net">Python Script for
+Notepad++</a></strong></p>
+<p>This create the runtime environment for executing python scripts on
+Notepad++ objects. Install by downloading via:
+  <a href="http://npppythonscript.sourceforge.net/download.shtml">http://npppythonscript.sourceforge.net/download.shtml</a><br />
+(better choose the *.msi option)</p>
+<p><strong><a href="http://pypi.python.org/pypi/autopep8">autopep8</a></strong><br />
+This is the main library module for checking &amp; converting to
+PEP8-complying code. It, in turn, depends on
+<a href="https://github.com/jcrocholl/pep8">pep8</a>package.<br />
+Installing steps via pip:</p>
+<ul>
+<li><em>pip install --upgrade pep8</em></li>
+<li><em>pip install --upgrade autopep8</em></li>
+</ul>
+<p><strong>Installation</strong></p>
+<ol>
+<li>Install<strong>pep8</strong></li>
+<li>Install <strong>autopep8</strong></li>
+<li>install <strong>Python Script</strong> for Notepad++</li>
+<li>download <a href="http://bit.ly/pep8_tonizer"><strong>pep8_tonizer.py</strong></a> to a
+    convenient location</li>
+<li>find &amp; copy pep8.py &amp; autopep8.py to \&lt;Notepad++ install
+    dir>\\plugins\PythonScript\lib</li>
+<li>start notepad++</li>
+<li>Go to Menu >> Plugins >> Python Script</li>
+<li>click "New script"</li>
+<li>find &amp; select "pep8_tonizer.py"</li>
+<li>Good job, all set.</li>
+</ol>
+<p><strong>Usage</strong></p>
+<p>After opening / creating any python source file,</p>
+<ol>
+<li>Go to Menu >> Plugins >> Python Script >> Scripts</li>
+<li>Click "pep8_tonizer.py"</li>
+<li>Whoa !</li>
+</ol>
+<p><strong>TODO list</strong></p>
+<ol>
+<li>adding options for autopep8 style configurations, currently it works
+    as default</li>
+<li>automate the setup processes(dependency check as well) as much as
+    possible</li>
+<li>integrate the whole process into just 1 or 2 steps</li>
+</ol>
+<p>hope, you will enjoy !</p>
+  </div>
+  <div class="article_meta">
+    <p>Posted on: Fri 02 May 2014</p>
+    <p>Category: <a href="/category/coding-configuration-internet-linux-python-software-web.html">Coding, configuration, Internet, Linux, Python, software, web</a>
+ &ndash; Tags:
+      <a href="/tag/coding.html">coding</a>,      <a href="/tag/editor.html">editor</a>,      <a href="/tag/extension.html">extension</a>,      <a href="/tag/free.html">free</a>,      <a href="/tag/ide.html">ide</a>,      <a href="/tag/notepad.html">notepad++</a>,      <a href="/tag/pep8.html">pep8</a>,      <a href="/tag/plugin.html">plugin</a>,      <a href="/tag/programming.html">programming</a>,      <a href="/tag/programming-style.html">programming style</a>,      <a href="/tag/python.html">python</a>,      <a href="/tag/styleguide.html">styleguide</a>,      <a href="/tag/tips.html">tips</a>,      <a href="/tag/unofficial.html">unofficial</a>,      <a href="/tag/web.html">web</a>,      <a href="/tag/windows.html">windows</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "pep8_tonizer-on-for-notepad-make-your-python-code-pep8-compliant-on-editor.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://kmonsoor.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+      <p>&copy; Khaled Monsoor. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/gfidente/pelican-svbhack" target="_blank">github</a>. Member of the <a href="http://internetdefenseleague.org">Internet Defense League</a>.</p>
+    </div>
+  </main>
+<script type="text/javascript">
+  window._idl = {};
+  _idl.variant = "banner";
+  (function() {
+    var idl = document.createElement('script');
+    idl.type = 'text/javascript';
+    idl.async = true;
+    idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+    document.getElementsByTagName('body')[0].appendChild(idl);
+  })();
+</script>
+</body>
+</html>

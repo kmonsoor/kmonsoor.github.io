@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ## for client-side less
+  <link rel="stylesheet/less" type="text/css" href="/theme/css/style.less">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.7.3/less.min.js" type="text/javascript"></script>
+  -->
+  <link rel="stylesheet" type="text/css" href="/theme/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/theme/css/pygments.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=PT+Sans|PT+Serif|PT+Mono">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Khaled Monsoor">
+  <meta name="description" content="Posts and writings by Khaled Monsoor">
+
+
+<meta name="keywords" content="best practices, code quality, deadly, debugging, programming, python, software development, software documentation, worst practices">
+
+  <title>
+    kmonsoor's tech posts
+&ndash; Se7en Deadly Sins to Do in Python code  </title>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-20431143-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+
+<body>
+  <aside>
+    <div id="user_meta">
+      <a href="">
+        <img src="/static/images/your_logo.png" alt="logo">
+      </a>
+      <h2><a href="">Khaled Monsoor</a></h2>
+      <p></p>
+      <ul>
+        <li><a href="/pages/about-khaled-monsoor.html">About</a></li>
+        <li><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
+        <li><a href="http://python.org/" target="_blank">Python.org</a></li>
+        <li><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
+        <li><a href="#" target="_blank">You can modify those links in your config file</a></li>
+        <li><a href="#" target="_blank">You can add links in your config file</a></li>
+        <li><a href="#" target="_blank">Another social link</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <p>
+      <a href="">Index</a> &brvbar; <a href="/archives.html">Archives</a>
+      </p>
+    </header>
+
+<article>
+  <div class="article_title">
+    <h3><a href="/seven-deadly-sins-in-python-code.html">Se7en Deadly Sins to Do in Python code</a></h3>
+  </div>
+  <div class="article_text">
+    <p>[<strong>Update</strong>: some of my friends expressed their confusion regarding the
+word used "<strong><em>Deadly</em></strong>". To make things clear a bit, i have used the
+word <strong>NOT</strong> to express that this coding bad-practices harm human or any
+other life-form. Rather, i used the word to express the power of these
+to diminish the productivity of a Python programmer or his fellow
+teammate(s) who will work on the same code ]</p>
+<p>There are a lot of ways someone can make his (or her) Python code
+extremely difficult for himself and his fellow developers to work with.
+But, the below ones are in my top-list.</p>
+<p><span style="color:#808080;">Please take all these with quite a bit of
+salt, due to my limited expertise &amp; very limited experience with
+different types of projects based on Python.</span></p>
+<p><strong>7</strong> is just a catchy number. Of course, this top list is subject to
+change along with my experience. You are also most welcome to suggest
+your own-finding to make into this list.</p>
+<h3><strong>1. The <code>try: except: pass</code> trio</strong></h3>
+<p>You know about design patterns, right ? At least, you know a little bit.
+From <a href="https://en.wikipedia.org/wiki/Software_design_pattern">Wikipedia</a>,</p>
+<blockquote>
+<p>Design patterns can speed up the development process by providing
+tested, proven development paradigms. Effective software design
+requires considering issues that may not become visible until later in
+the implementation. Reusing design patterns helps to prevent subtle
+issues that can cause major problems, and it also improves code
+readability for coders and architects who are familiar with the
+patterns.</p>
+</blockquote>
+<p>Now, think of the complete opposite of design-pattern. It is
+called <em>anti-pattern</em> which silently "destroys" your efficiency in code.
+The below pattern is considered the most deadly anti-pattern in Python
+code. <a href="http://redsymbol.net/">Aaron Maxwell</a> called it <a href="https://realpython.com/blog/python/the-most-diabolical-python-antipattern/">most
+diabolical</a>
+or devilish anti-pattern.</p>
+<p>[code language="python"]<br />
+try:<br />
+subtle_bug-inside_operation() # most possibly with I/O or DB
+operation<br />
+except:<br />
+pass<br />
+[/code]</p>
+<p>You thought to save some development time by "pass"ing them by. But, it
+will take hours, if not days, to find possible bugs, inside the block,
+later as all the exceptions are masked by the "pass" and the error
+location will be somewhere else outside this try:except block which may
+look like the most innocent code.<br />
+Quoting from Aaron ...</p>
+<blockquote>
+<p>In my nearly ten years of experience writing applications in Python,
+both individually and as part of a team, this pattern has stood out as
+the single greatest drain on developer productivity and application
+reliability… especially over the long term.</p>
+</blockquote>
+<h3><strong>2. Wildcard imports (<code>from module import *</code>)</strong></h3>
+<p>This one single practice can render a nice (clean) module into a
+nightmare. According to a core Python developer <a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html#importing">David
+Goodger</a>,</p>
+<blockquote>
+<p>Wild-card imports are from the dark side of Python.<br />
+<strong>Never!</strong><br />
+ The <code>from module import *</code> wild-card style leads to namespace
+pollution. You'll get things in your local namespace that you didn't
+expect to get. You may see imported names obscuring module-defined
+local names. You won't be able to figure out where certain names come
+from. Although a convenient shortcut, this should not be in production
+code.<br />
+<em>Moral: don't use wild-card imports!</em></p>
+</blockquote>
+<p>also, in light of <a href="http://www.yodaquotes.net/">Yoda's mythical
+conversation</a>s, David also writes:</p>
+<blockquote>
+<p>LUKE: Is from module import * better than explicit imports?<br />
+ YODA: No, not better. Quicker, easier, more seductive.<br />
+ LUKE: But how will I know why explicit imports are better than the
+wild-card form?<br />
+ YODA: Know you will when your code you try to read six months from
+now.</p>
+</blockquote>
+<p>If you use this practice in between inter-connected modules in a
+mid-sized project, worry not, you'll start to get errors due to circular
+references soon enough.</p>
+<p>"Nice", isn't it?</p>
+<h3><strong>3. Thinking that <code>try:except:else</code> construct is not a natural control flow</strong></h3>
+<p>If you are coming from Java world, I understand your confusion. But,
+Python adopted this construct so much different than Java. It helps to
+realize Python's philosophy <span style="line-height:1.7;">"</span><a href="https://docs.python.org/2/glossary.html#term-eafp">Ask
+for Forgiveness than
+Permission</a><span
+style="line-height:1.7;">, aka "EAFP paradigm".</span></p>
+<p>Trying to avoid this will result in a absolutely unnecessary, messy,
+unpythonic code. As this <a href="http://stackoverflow.com/a/16138864/617185">great answer on
+StackOverflow</a>, by a core
+Python developer, on this matter nicely portrays the philosophy behind
+it.</p>
+<p>Quoting him :</p>
+<blockquote>
+<p>In the Python world, using exceptions for flow control is common and
+normal. Even the Python core developers use exceptions for
+flow-control and that style is heavily baked into the language (i.e.
+the iterator protocol uses <em>StopIteration</em>to signal loop termination).
+In addition, the try-except-style is used to prevent the
+race-conditions inherent in some of the "look-before-you-leap"
+constructs.</p>
+<p>For example, testing os.path.exists results in information that may be
+out-of-date by the time you use it. Likewise, Queue.full returns
+information that may be stale. The try-except-else style will produce
+more reliable code in these cases. In some other languages, that rule
+reflects their cultural norms as reflected in their libraries.<br />
+ The "rule" is also based in-part on performance considerations for
+those languages.</p>
+</blockquote>
+<p>Also, consider checking out <a href="http://stackoverflow.com/a/180974/617185">this Q&amp;A on
+StackOverflow</a> on the same
+premise.</p>
+<h3><strong>4. Making everything a Class aka Overusing classes</strong></h3>
+<p>What I am referring to is <a href="https://www.youtube.com/watch?v=o9pEzgHorH0">this talk by Jack
+Diederich</a> on PyCon 2012.
+You should watch this couple of times and then once in every week. His
+summary is like ... Stop creating classes, and modules in every now and
+then. Before creating one, think hard. Probably, what you need is
+writing just a function.</p>
+<p><a href="https://www.python.org/dev/peps/pep-0020/">Zen of Python</a> described it
+as below. Read it again,<br />
+again, and again.</p>
+<blockquote>
+<ul>
+<li>Beautiful is better than ugly.</li>
+<li>Explicit is better than implicit.</li>
+<li>Simple is better than complex.</li>
+<li>Flat is better than nested.</li>
+<li>Readability counts.</li>
+<li>If the implementation is hard to explain, it's a bad idea</li>
+</ul>
+</blockquote>
+<p>Though the below is a perfectly valid class, it is a perfect example
+case of b***sh*t classes:</p>
+<p>[code language="python"]<br />
+class Greeting(object):<br />
+def __init__(self, greeting='hello'):<br />
+self.greeting = greeting</p>
+<p>def greet(self, name):<br />
+return '%s! %s' % (self.greeting, name)</p>
+<p>greeting = Greeting('hola')<br />
+print greeting.greet('bob')<br />
+[/code]</p>
+<p>It is doing exactly same as below:</p>
+<p>[code language="python"]<br />
+def greet(greeting, target):<br />
+return '%s! %s' % (greeting, target)<br />
+[/code]</p>
+<p>He also showed a practical example how he simplified (aka
+re-factored) an API's complete code, consisting:</p>
+<ul>
+<li>1 Package, 22 Modules</li>
+<li>20 Classes</li>
+<li>660 Source Lines of Code</li>
+</ul>
+<p>into this below, a grand total of 8 lines. Yes, just 8 lines !!!</p>
+<p>[code language="python"]<br />
+MUFFIN_API = url='https://api.wbsrvc.com/%s/%s/'<br />
+MUFFIN_API_KEY = 'SECRET-API-KEY'</p>
+<p>def request(noun, verb, **params):<br />
+headers = {'apikey' : MUFFIN_API_KEY}<br />
+request = urllib2.Request(MUFFIN_API % (noun, verb),<br />
+urllib.urlencode(params), headers)<br />
+return json.loads(urllib2.urlopen(request).read())<br />
+[/code]</p>
+<p>Stop re-inventing the wheel, use more of built-in library functions, use
+much less own long chains of class-hierarchy. Want to see a worst
+scenario of creating classes? Check this:</p>
+<p>[code language="python"]<br />
+class Flow(object):<br />
+"""Base class for all Flow objects."""<br />
+pass</p>
+<p>class Storage(object):<br />
+def put(self, data): _abstract()<br />
+def get(self): _abstract()</p>
+<p>def _abstract(): raise NotImplementedError<br />
+[/code]</p>
+<p>Yes, this is a real piece of code from Google API client code. (which,
+in total, has <em>10,000 SLOC, 115 modules, 207 classes</em>). Whereas <a href="https://github.com/jackdied/python-foauth2">someone
+did implemented the same</a>,
+well maybe not extremely robust, but in <em>135 SLOC, 3 classes</em>.</p>
+<p>You see the point, right ? Guido did.<br />
+[  </p>
+<p><img alt="guido-google-comment" src="https://kmonsoor.files.wordpress.com/2015/02/guido-google-comment.jpg" /><br />
+](https://plus.google.com/+JackDiederich/posts/iPiqWHjwcf3)</p>
+<h3><strong>5. Saving time by not writing any documentation or inline comments</strong></h3>
+<p>If you don't write comments with your semi-obfuscated code, and no
+docstrings as well saving time and meeting deadlines, stay assure that
+within a short period you'll hate yourself when you will not remember
+what (&amp; why) you did something while reading your own code.</p>
+<p>Today or tomorrow, you will leave the company. And, that code will haunt
+all the members of your team who will come across this code-like
+zombies; unless they totally cut-off-the-head(e.g. replace) of your
+code. There is just no excuse that you don't do "documentation"
+except you just don't care. If you would care, you would not only write
+minimal doc-strings and comments on complex code-sections, but also name
+your functions, methods, variables to reflect the purpose of the
+component to make them "self-documented".</p>
+<p>Here is a nice guide to properly <a href="http://docs.python-guide.org/en/latest/writing/documentation/">documenting your Python
+code.</a></p>
+<p>However, there will still be deniers out there ...</p>
+<p><a href="https://xkcd.com/1513/"><img alt="code-quality" src="http://imgs.xkcd.com/comics/code_quality.png" /><br />
+</a></p>
+<h3><strong>6. Avoiding Unit-tests (and doc-tests) until the doomsday comes</strong></h3>
+<p>Yes, the judgement day will come. It will happen on the production
+server, with customer's downtime due to a "completely" manually-tested
+new feature, which will break something "almost" unrelated.</p>
+<p>Yes, your company can lose millions and <a href="http://dougseven.com/2014/04/17/knightmare-a-devops-cautionary-tale/">can be out
+of business.</a> Maybe
+after some sleep-less night of the development team, the "bug" would
+have found out.</p>
+<p>Maybe, this whole mess could be simply avoided if the developer wrote
+his/her
+modules' <a href="https://docs.python.org/2/library/unittest.html">unit-test</a> as
+well as <a href="https://docs.python.org/2/library/doctest.html">doctests</a> for
+the functions or methods. And, after implementing the feature he would
+have run the tests once across the project. The online book
+Dive-in-Python has an excellent introduction on <code>unittest</code>. Also, you
+can start with <a href="http://docs.python-guide.org/en/latest/writing/tests/#unittest">Hitchhiker's
+guide's introduction</a>.</p>
+<h3><strong>7. Mixing <code>TAB</code> and <code>SPACE</code> in the same file</strong></h3>
+<p>You will need no more reason to curse yourself just a while after. It
+will haunt you whenever you'll need to open the source-code in any
+editor other than your usual one. And, for others, "oh my! I can't
+literally even...".</p>
+<p>And, while working with your code, some of your fellow programmers will
+"wish" for you like this girl:  </p>
+<p><a href="https://i.imgur.com/URYofs4.jpg"><img alt="the" src="https://i.imgur.com/URYofs4.jpg" /></a>
+reading</p>
+<blockquote>
+<p>... you’re weak, your bloodline is weak, and you will not survive the
+winter.</p>
+</blockquote>
+<p>While Python 3 will simply refuse to interpret this mixed file, in
+Python 2, the interpretation of TAB is as if it is converted to spaces
+using 8-space tab stops. So while executing, you may have no clue where
+a specific-line is being considered as which code-block's part.</p>
+<p>For any code that you think someday someone else will read or use, to
+avoid confusion, you should stick
+with <a href="http://legacy.python.org/dev/peps/pep-0008/#tabs-or-spaces">PEP-8</a>,
+or your team-specific coding style. PEP-8 strongly discourage mixing TAB
+and Space in a same file.</p>
+<p>Also, check out this <a href="http://programmers.stackexchange.com/a/197839/74557">Q&amp;A on
+StackExchange.</a></p>
+<blockquote>
+<p>​1. The first downside is that it quickly becomes a mess</p>
+<p>... Formatting should be the task of the IDE. Developers have already
+enough work to care about the size of tabs, how much spaces will an
+IDE insert, etc. The code should be formatted correctly, and displayed
+correctly on other configurations, without forcing developers to think
+about it.</p>
+</blockquote>
+<p>Also, <a href="http://www.secnetix.de/olli/Python/block_indentation.hawk">remember
+this</a></p>
+<blockquote>
+<p>Furthermore, it can be a good idea to avoid tabs altogether, because
+the semantics of tabs are not very well-defined in the computer world,
+and they can be displayed completely differently on different types of
+systems and editors. Also, tabs often get destroyed or wrongly
+converted during copy&amp;paste operations, or when a piece of source code
+is inserted into a web page or other kind of markup code.</p>
+</blockquote>
+<p>That's all for now. That's my list.</p>
+<p>At the end, thanks for visiting my post. Please share your experience
+what you think is the worst "un-pythonic" nightmare in Python code.</p>
+  </div>
+  <div class="article_meta">
+    <p>Posted on: Mon 10 August 2015</p>
+    <p>Category: <a href="/category/coding-python.html">Coding, Python</a>
+ &ndash; Tags:
+      <a href="/tag/best-practices.html">best practices</a>,      <a href="/tag/code-quality.html">code quality</a>,      <a href="/tag/deadly.html">deadly</a>,      <a href="/tag/debugging.html">debugging</a>,      <a href="/tag/programming.html">programming</a>,      <a href="/tag/python.html">python</a>,      <a href="/tag/software-development.html">software development</a>,      <a href="/tag/software-documentation.html">software documentation</a>,      <a href="/tag/worst-practices.html">worst practices</a>    </p>
+  </div>
+
+  <div id="article_comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "seven-deadly-sins-in-python-code.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = 'http://kmonsoor.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+</article>
+
+
+    <div id="ending_message">
+      <p>&copy; Khaled Monsoor. Built using <a href="http://getpelican.com" target="_blank">Pelican</a>. Theme by Giulio Fidente on <a href="https://github.com/gfidente/pelican-svbhack" target="_blank">github</a>. Member of the <a href="http://internetdefenseleague.org">Internet Defense League</a>.</p>
+    </div>
+  </main>
+<script type="text/javascript">
+  window._idl = {};
+  _idl.variant = "banner";
+  (function() {
+    var idl = document.createElement('script');
+    idl.type = 'text/javascript';
+    idl.async = true;
+    idl.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'members.internetdefenseleague.org/include/?url=' + (_idl.url || '') + '&campaign=' + (_idl.campaign || '') + '&variant=' + (_idl.variant || 'banner');
+    document.getElementsByTagName('body')[0].appendChild(idl);
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kmonsoor's tech posts</title><link href="http://blog.kmonsoor.com/" rel="alternate"></link><link href="http://blog.kmonsoor.com/feeds/idea-internet-ux-web.atom.xml" rel="self"></link><id>http://blog.kmonsoor.com/</id><updated>2013-12-28T23:29:00+06:00</updated><entry><title>Ad vs. Content :: Profitability vs. Readability</title><link href="http://blog.kmonsoor.com/ad-vs-content-profitability-vs-readability.html" rel="alternate"></link><updated>2013-12-28T23:29:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2013-12-28:ad-vs-content-profitability-vs-readability.html</id><summary type="html">&lt;p&gt;&lt;em&gt;P.S. I am basically a software engineer, while i am writing this up as
+just as an UX enthusiast's fan out of frustrations. So, never mind if
+you are an expert on this subject matter.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;For quite a while, i am totally unhappy with overall readability of most
+of the web sites, especially the heavy traffic sites. Why they make
+their pages filled with crapland-ish ads? To add a little salt on the
+burn, they kept doing pagination. As a preventive measure, I kept using
+browser-extensions like
+&lt;a href="https://chrome.google.com/webstore/detail/readability/oknpjjbmpnndlpmnhmekjpocelpnlfdi"&gt;readability&lt;/a&gt;,
+&lt;a href="https://chrome.google.com/webstore/detail/minimalist-for-everything/bmihblnpomgpjkfddepdpdafhhepdbek"&gt;minimalistic&lt;/a&gt;,
+&lt;a href="https://chrome.google.com/webstore/detail/hacker-vision/fommidcneendjonelhhhkmoekeicedej"&gt;hacker
+vision&lt;/a&gt;
+etc.&lt;br /&gt;
+Is that so tough to create well-designed site with keeping up site's
+profitability? In their long run, does their insane amount of ad-pushing
+don't hurt or not?&lt;/p&gt;
+&lt;p&gt;A question on UX.StackExchange just fueled my frustrations. [&lt;a href="http://ux.stackexchange.com/q/21375/21647"&gt;Is there a
+point to paginating articles
+online?&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;IMAO, Most of the high-traffic sites still miss some very important
+points from user perspective.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Over the time&lt;/strong&gt;, since the online era, our subconscious as well as
+    conscious mind are well-trained to ignore ads altogether and focus
+    on the content, mostly on relevant picture. e.g. when i entered a
+    NYTimes for news on Iraq, the new shiny Ford(ad) is totally
+    irrelevant (hence, irritating). In return, my subconscious mind take
+    a silent note on this irritation (entirely due to the ad).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;As a try to address&lt;/strong&gt; the fact, ad engines (syndicates) tried to
+    deliver contextual ads and collect and relate search data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;What is the result?&lt;/strong&gt;  once i just needed to know(so, searched) a
+    fact about Nikon D800. Now, everywhere i just see ads of DSLRs. As i
+    already have one, i am not even remotely interested to buy another
+    one. Now, what? My irritation just got a polynomial factor.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Our monitors&lt;/strong&gt;, even on laptops, are mostly now widescreen(16:9)
+    rather than archaic 4:3. But, the sites mostly are failing to adopt
+    the new display real-estate. Instead the ad's column (on the right)
+    just multiplied.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Yet still, Pagination&lt;/strong&gt; is the worst factor to "dishonor" the
+    visitor's "mission statement". Dividing a single writeup into 4
+    pages for the sake of showing ads, is just like "holy" water from a
+    fountain of hell. Pagination has being tagged along from the dawn of
+    Internet to break the "payload" into smaller pieces due to slow
+    bandwidth. But now, used as wonderful way to push ads.  Wherever i
+    see  &lt;em&gt;"&lt;span style="text-align:center;line-height:1.5em;"&gt;Page |  1
+    |&lt;/span&gt;&lt;strong&gt;2&lt;/strong&gt;&lt;span style="text-align:center;line-height:1.5em;"&gt; | 3
+    | 4|",&lt;/span&gt;&lt;/em&gt;&lt;span style="text-align:center;line-height:1.5em;"&gt;my
+    subconscious tells me that as&lt;/span&gt;&lt;em&gt;&lt;span
+    style="text-align:center;line-height:1.5em;"&gt; "the content is not
+    for reading, just a packet for ads." or "why bother to read that
+    all? Let's click some ads"&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Every time, i want to see the text bigger, i got to do CTRL+Scroll
+    on mouse.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;I don't remember the last time i clicked an ad. When were your last
+    time?  Seems like &lt;strong&gt;&lt;em&gt;"ads, ads everywhere. nor any drop to
+    click".&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In my Utopian world of Internet,  i would design reading-friendly and
+readable (yet, revenue generating) site like this.&lt;/p&gt;
+&lt;p&gt;What do you think ?&lt;/p&gt;
+&lt;p&gt;btw, i am keeping this design work licensed under a &lt;a href="http://creativecommons.org/licenses/by-sa/4.0/"&gt;Creative Commons
+by-sa 4.0 license&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://i.stack.imgur.com/0RZ4u.png"&gt;&lt;img alt="" src="http://i.stack.imgur.com/0RZ4u.png" /&gt;&lt;/a&gt;&lt;/p&gt;</summary><category term="profit"></category><category term="profitability"></category><category term="readability"></category><category term="technology"></category><category term="ui"></category><category term="UX"></category></entry></feed>

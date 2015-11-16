@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kmonsoor's tech posts</title><link href="http://blog.kmonsoor.com/" rel="alternate"></link><link href="http://blog.kmonsoor.com/feeds/idea-ux-web.atom.xml" rel="self"></link><id>http://blog.kmonsoor.com/</id><updated>2013-12-17T01:21:00+06:00</updated><entry><title>[UX] Should my blank query (on a site) return any result ? [yet to complete]</title><link href="http://blog.kmonsoor.com/ux-what-should-blank-query-return.html" rel="alternate"></link><updated>2013-12-17T01:21:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2013-12-17:ux-what-should-blank-query-return.html</id><summary type="html">&lt;p&gt;While i was going through some site, i was looking for something. Okay,
+i admit it was a job site.I wanted to begin from ALL results then filter
+it down. So, I just hit "Search" without giving any query.&lt;/p&gt;
+&lt;p&gt;Should it return me with all or nothing?&lt;/p&gt;
+&lt;p&gt;I raised a question in &lt;a href="http://ux.stackexchange.com/questions/49080/what-should-be-fetched-if-someone-search-with-blank-queries"&gt;UX forum of
+StackExchange&lt;/a&gt;
+(u know StackOverflow, right ?!) about that. What should be the smart
+approach to the classic UX problem? What is the current trend? What it
+should be ?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;My Question was:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Almost all site include a "Search" facility. It can be a job site,
+blog, photography-sale, or forum.&lt;/p&gt;
+&lt;p&gt;usual format is like:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="mockup" src="http://i.stack.imgur.com/mnQOP.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ux.stackexchange.com/plugins/mockups/download?image=http%3a%2f%2fi.stack.imgur.com%2fmnQOP.png"&gt;download bmml
+source&lt;/a&gt; –
+Wireframes created with &lt;a href="http://www.balsamiq.com/products/mockups"&gt;Balsamiq
+Mockups&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Question is:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If user keep the input box empty, and hit ENTER (or click "Search"
+button), what should (s)he get ?&lt;/p&gt;
+&lt;p&gt;What would be the &lt;strong&gt;&lt;em&gt;smartest&lt;/em&gt;&lt;/strong&gt; UX approach ?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;return &lt;strong&gt;ALL&lt;/strong&gt; e.g. Google jobs site&lt;/li&gt;
+&lt;li&gt;return &lt;strong&gt;NOTHING&lt;/strong&gt;, and notify user to enter search term&lt;/li&gt;
+&lt;li&gt;bring up the dedicated &lt;strong&gt;search page&lt;/strong&gt; e.g. this site&lt;/li&gt;
+&lt;li&gt;return the &lt;strong&gt;HOT items&lt;/strong&gt; right now on the site&lt;/li&gt;
+&lt;li&gt;return the &lt;strong&gt;MOST_SEARCHED&lt;/strong&gt; items, or&lt;/li&gt;
+&lt;li&gt;return some &lt;strong&gt;RANDOM items&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;does NOTHING&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Is there any &lt;strong&gt;&lt;em&gt;standard&lt;/em&gt;&lt;/strong&gt;, &lt;strong&gt;&lt;em&gt;de facto&lt;/em&gt;&lt;/strong&gt;, or research findings on
+this concern?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It started a lot of views (400 hits on first day) as well as answers,
+comments opinion. I got the point that it rang some bell.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;I believe now that it's an classic question.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;i also did some fact-finding along the way. What is the approach of the
+leading web sites around the globe ?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Google / Bing&lt;/strong&gt;: "Google and Bing handle this and their flow is to
+just ignore the search request if there is no search value entered and
+keep the user in the same page." (Thanks, @Mervin on StackExchange)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Amazon&lt;/strong&gt;: return back to homepage with an extra
+"&lt;em&gt;/ref=nb_sb_noss_null"&lt;/em&gt; in the link&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Google Jobs&lt;/strong&gt;: returns ALL, sorted by "logging-location" and
+reverse-chrono. Page navigation says "Page 1 of many"&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Chrome Web Store&lt;/strong&gt;: just does nothing on pressing ENTER&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Gmail&lt;/strong&gt;: It is quite interesting. While in inbox, pressing "search"
+does nothing. But when user gives &lt;em&gt;blank&lt;/em&gt;in advanced search, it (IMO,
+rightfully returns &lt;strong&gt;ALL Mails&lt;/strong&gt;) with a notif. as &lt;em&gt;"Invalid search
+query - returning all mail."&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://i.stack.imgur.com/ZTTnx.png"&gt;&lt;img alt="gmail blank query
+message" src="http://i.stack.imgur.com/ZTTnx.png" /&gt;&lt;/a&gt;&lt;/p&gt;</summary><category term="natural"></category><category term="query"></category><category term="search"></category><category term="smartnesss"></category><category term="user-friendly"></category><category term="UX"></category><category term="web2"></category></entry></feed>

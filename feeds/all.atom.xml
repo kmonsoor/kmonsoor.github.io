@@ -1,0 +1,1769 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>kmonsoor's tech posts</title><link href="http://blog.kmonsoor.com/" rel="alternate"></link><link href="http://blog.kmonsoor.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.kmonsoor.com/</id><updated>2015-08-10T17:05:00+06:00</updated><entry><title>Se7en Deadly Sins to Do in Python code</title><link href="http://blog.kmonsoor.com/seven-deadly-sins-in-python-code.html" rel="alternate"></link><updated>2015-08-10T17:05:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2015-08-10:seven-deadly-sins-in-python-code.html</id><summary type="html">&lt;p&gt;[&lt;strong&gt;Update&lt;/strong&gt;: some of my friends expressed their confusion regarding the
+word used "&lt;strong&gt;&lt;em&gt;Deadly&lt;/em&gt;&lt;/strong&gt;". To make things clear a bit, i have used the
+word &lt;strong&gt;NOT&lt;/strong&gt; to express that this coding bad-practices harm human or any
+other life-form. Rather, i used the word to express the power of these
+to diminish the productivity of a Python programmer or his fellow
+teammate(s) who will work on the same code ]&lt;/p&gt;
+&lt;p&gt;There are a lot of ways someone can make his (or her) Python code
+extremely difficult for himself and his fellow developers to work with.
+But, the below ones are in my top-list.&lt;/p&gt;
+&lt;p&gt;&lt;span style="color:#808080;"&gt;Please take all these with quite a bit of
+salt, due to my limited expertise &amp;amp; very limited experience with
+different types of projects based on Python.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;7&lt;/strong&gt; is just a catchy number. Of course, this top list is subject to
+change along with my experience. You are also most welcome to suggest
+your own-finding to make into this list.&lt;/p&gt;
+&lt;h3&gt;&lt;strong&gt;1. The &lt;code&gt;try: except: pass&lt;/code&gt; trio&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;You know about design patterns, right ? At least, you know a little bit.
+From &lt;a href="https://en.wikipedia.org/wiki/Software_design_pattern"&gt;Wikipedia&lt;/a&gt;,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Design patterns can speed up the development process by providing
+tested, proven development paradigms. Effective software design
+requires considering issues that may not become visible until later in
+the implementation. Reusing design patterns helps to prevent subtle
+issues that can cause major problems, and it also improves code
+readability for coders and architects who are familiar with the
+patterns.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now, think of the complete opposite of design-pattern. It is
+called &lt;em&gt;anti-pattern&lt;/em&gt; which silently "destroys" your efficiency in code.
+The below pattern is considered the most deadly anti-pattern in Python
+code. &lt;a href="http://redsymbol.net/"&gt;Aaron Maxwell&lt;/a&gt; called it &lt;a href="https://realpython.com/blog/python/the-most-diabolical-python-antipattern/"&gt;most
+diabolical&lt;/a&gt;
+or devilish anti-pattern.&lt;/p&gt;
+&lt;p&gt;[code language="python"]&lt;br /&gt;
+try:&lt;br /&gt;
+subtle_bug-inside_operation() # most possibly with I/O or DB
+operation&lt;br /&gt;
+except:&lt;br /&gt;
+pass&lt;br /&gt;
+[/code]&lt;/p&gt;
+&lt;p&gt;You thought to save some development time by "pass"ing them by. But, it
+will take hours, if not days, to find possible bugs, inside the block,
+later as all the exceptions are masked by the "pass" and the error
+location will be somewhere else outside this try:except block which may
+look like the most innocent code.&lt;br /&gt;
+Quoting from Aaron ...&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In my nearly ten years of experience writing applications in Python,
+both individually and as part of a team, this pattern has stood out as
+the single greatest drain on developer productivity and application
+reliability… especially over the long term.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;&lt;strong&gt;2. Wildcard imports (&lt;code&gt;from module import *&lt;/code&gt;)&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;This one single practice can render a nice (clean) module into a
+nightmare. According to a core Python developer &lt;a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html#importing"&gt;David
+Goodger&lt;/a&gt;,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Wild-card imports are from the dark side of Python.&lt;br /&gt;
+&lt;strong&gt;Never!&lt;/strong&gt;&lt;br /&gt;
+ The &lt;code&gt;from module import *&lt;/code&gt; wild-card style leads to namespace
+pollution. You'll get things in your local namespace that you didn't
+expect to get. You may see imported names obscuring module-defined
+local names. You won't be able to figure out where certain names come
+from. Although a convenient shortcut, this should not be in production
+code.&lt;br /&gt;
+&lt;em&gt;Moral: don't use wild-card imports!&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;also, in light of &lt;a href="http://www.yodaquotes.net/"&gt;Yoda's mythical
+conversation&lt;/a&gt;s, David also writes:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;LUKE: Is from module import * better than explicit imports?&lt;br /&gt;
+ YODA: No, not better. Quicker, easier, more seductive.&lt;br /&gt;
+ LUKE: But how will I know why explicit imports are better than the
+wild-card form?&lt;br /&gt;
+ YODA: Know you will when your code you try to read six months from
+now.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;If you use this practice in between inter-connected modules in a
+mid-sized project, worry not, you'll start to get errors due to circular
+references soon enough.&lt;/p&gt;
+&lt;p&gt;"Nice", isn't it?&lt;/p&gt;
+&lt;h3&gt;&lt;strong&gt;3. Thinking that &lt;code&gt;try:except:else&lt;/code&gt; construct is not a natural control flow&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;If you are coming from Java world, I understand your confusion. But,
+Python adopted this construct so much different than Java. It helps to
+realize Python's philosophy &lt;span style="line-height:1.7;"&gt;"&lt;/span&gt;&lt;a href="https://docs.python.org/2/glossary.html#term-eafp"&gt;Ask
+for Forgiveness than
+Permission&lt;/a&gt;&lt;span
+style="line-height:1.7;"&gt;, aka "EAFP paradigm".&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Trying to avoid this will result in a absolutely unnecessary, messy,
+unpythonic code. As this &lt;a href="http://stackoverflow.com/a/16138864/617185"&gt;great answer on
+StackOverflow&lt;/a&gt;, by a core
+Python developer, on this matter nicely portrays the philosophy behind
+it.&lt;/p&gt;
+&lt;p&gt;Quoting him :&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In the Python world, using exceptions for flow control is common and
+normal. Even the Python core developers use exceptions for
+flow-control and that style is heavily baked into the language (i.e.
+the iterator protocol uses &lt;em&gt;StopIteration&lt;/em&gt;to signal loop termination).
+In addition, the try-except-style is used to prevent the
+race-conditions inherent in some of the "look-before-you-leap"
+constructs.&lt;/p&gt;
+&lt;p&gt;For example, testing os.path.exists results in information that may be
+out-of-date by the time you use it. Likewise, Queue.full returns
+information that may be stale. The try-except-else style will produce
+more reliable code in these cases. In some other languages, that rule
+reflects their cultural norms as reflected in their libraries.&lt;br /&gt;
+ The "rule" is also based in-part on performance considerations for
+those languages.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Also, consider checking out &lt;a href="http://stackoverflow.com/a/180974/617185"&gt;this Q&amp;amp;A on
+StackOverflow&lt;/a&gt; on the same
+premise.&lt;/p&gt;
+&lt;h3&gt;&lt;strong&gt;4. Making everything a Class aka Overusing classes&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;What I am referring to is &lt;a href="https://www.youtube.com/watch?v=o9pEzgHorH0"&gt;this talk by Jack
+Diederich&lt;/a&gt; on PyCon 2012.
+You should watch this couple of times and then once in every week. His
+summary is like ... Stop creating classes, and modules in every now and
+then. Before creating one, think hard. Probably, what you need is
+writing just a function.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.python.org/dev/peps/pep-0020/"&gt;Zen of Python&lt;/a&gt; described it
+as below. Read it again,&lt;br /&gt;
+again, and again.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Beautiful is better than ugly.&lt;/li&gt;
+&lt;li&gt;Explicit is better than implicit.&lt;/li&gt;
+&lt;li&gt;Simple is better than complex.&lt;/li&gt;
+&lt;li&gt;Flat is better than nested.&lt;/li&gt;
+&lt;li&gt;Readability counts.&lt;/li&gt;
+&lt;li&gt;If the implementation is hard to explain, it's a bad idea&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Though the below is a perfectly valid class, it is a perfect example
+case of b***sh*t classes:&lt;/p&gt;
+&lt;p&gt;[code language="python"]&lt;br /&gt;
+class Greeting(object):&lt;br /&gt;
+def __init__(self, greeting='hello'):&lt;br /&gt;
+self.greeting = greeting&lt;/p&gt;
+&lt;p&gt;def greet(self, name):&lt;br /&gt;
+return '%s! %s' % (self.greeting, name)&lt;/p&gt;
+&lt;p&gt;greeting = Greeting('hola')&lt;br /&gt;
+print greeting.greet('bob')&lt;br /&gt;
+[/code]&lt;/p&gt;
+&lt;p&gt;It is doing exactly same as below:&lt;/p&gt;
+&lt;p&gt;[code language="python"]&lt;br /&gt;
+def greet(greeting, target):&lt;br /&gt;
+return '%s! %s' % (greeting, target)&lt;br /&gt;
+[/code]&lt;/p&gt;
+&lt;p&gt;He also showed a practical example how he simplified (aka
+re-factored) an API's complete code, consisting:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1 Package, 22 Modules&lt;/li&gt;
+&lt;li&gt;20 Classes&lt;/li&gt;
+&lt;li&gt;660 Source Lines of Code&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;into this below, a grand total of 8 lines. Yes, just 8 lines !!!&lt;/p&gt;
+&lt;p&gt;[code language="python"]&lt;br /&gt;
+MUFFIN_API = url='https://api.wbsrvc.com/%s/%s/'&lt;br /&gt;
+MUFFIN_API_KEY = 'SECRET-API-KEY'&lt;/p&gt;
+&lt;p&gt;def request(noun, verb, **params):&lt;br /&gt;
+headers = {'apikey' : MUFFIN_API_KEY}&lt;br /&gt;
+request = urllib2.Request(MUFFIN_API % (noun, verb),&lt;br /&gt;
+urllib.urlencode(params), headers)&lt;br /&gt;
+return json.loads(urllib2.urlopen(request).read())&lt;br /&gt;
+[/code]&lt;/p&gt;
+&lt;p&gt;Stop re-inventing the wheel, use more of built-in library functions, use
+much less own long chains of class-hierarchy. Want to see a worst
+scenario of creating classes? Check this:&lt;/p&gt;
+&lt;p&gt;[code language="python"]&lt;br /&gt;
+class Flow(object):&lt;br /&gt;
+"""Base class for all Flow objects."""&lt;br /&gt;
+pass&lt;/p&gt;
+&lt;p&gt;class Storage(object):&lt;br /&gt;
+def put(self, data): _abstract()&lt;br /&gt;
+def get(self): _abstract()&lt;/p&gt;
+&lt;p&gt;def _abstract(): raise NotImplementedError&lt;br /&gt;
+[/code]&lt;/p&gt;
+&lt;p&gt;Yes, this is a real piece of code from Google API client code. (which,
+in total, has &lt;em&gt;10,000 SLOC, 115 modules, 207 classes&lt;/em&gt;). Whereas &lt;a href="https://github.com/jackdied/python-foauth2"&gt;someone
+did implemented the same&lt;/a&gt;,
+well maybe not extremely robust, but in &lt;em&gt;135 SLOC, 3 classes&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;You see the point, right ? Guido did.&lt;br /&gt;
+[  &lt;/p&gt;
+&lt;p&gt;&lt;img alt="guido-google-comment" src="https://kmonsoor.files.wordpress.com/2015/02/guido-google-comment.jpg" /&gt;&lt;br /&gt;
+](https://plus.google.com/+JackDiederich/posts/iPiqWHjwcf3)&lt;/p&gt;
+&lt;h3&gt;&lt;strong&gt;5. Saving time by not writing any documentation or inline comments&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;If you don't write comments with your semi-obfuscated code, and no
+docstrings as well saving time and meeting deadlines, stay assure that
+within a short period you'll hate yourself when you will not remember
+what (&amp;amp; why) you did something while reading your own code.&lt;/p&gt;
+&lt;p&gt;Today or tomorrow, you will leave the company. And, that code will haunt
+all the members of your team who will come across this code-like
+zombies; unless they totally cut-off-the-head(e.g. replace) of your
+code. There is just no excuse that you don't do "documentation"
+except you just don't care. If you would care, you would not only write
+minimal doc-strings and comments on complex code-sections, but also name
+your functions, methods, variables to reflect the purpose of the
+component to make them "self-documented".&lt;/p&gt;
+&lt;p&gt;Here is a nice guide to properly &lt;a href="http://docs.python-guide.org/en/latest/writing/documentation/"&gt;documenting your Python
+code.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;However, there will still be deniers out there ...&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://xkcd.com/1513/"&gt;&lt;img alt="code-quality" src="http://imgs.xkcd.com/comics/code_quality.png" /&gt;  &lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;&lt;strong&gt;6. Avoiding Unit-tests (and doc-tests) until the doomsday comes&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;Yes, the judgement day will come. It will happen on the production
+server, with customer's downtime due to a "completely" manually-tested
+new feature, which will break something "almost" unrelated.&lt;/p&gt;
+&lt;p&gt;Yes, your company can lose millions and &lt;a href="http://dougseven.com/2014/04/17/knightmare-a-devops-cautionary-tale/"&gt;can be out
+of business.&lt;/a&gt; Maybe
+after some sleep-less night of the development team, the "bug" would
+have found out.&lt;/p&gt;
+&lt;p&gt;Maybe, this whole mess could be simply avoided if the developer wrote
+his/her
+modules' &lt;a href="https://docs.python.org/2/library/unittest.html"&gt;unit-test&lt;/a&gt; as
+well as &lt;a href="https://docs.python.org/2/library/doctest.html"&gt;doctests&lt;/a&gt; for
+the functions or methods. And, after implementing the feature he would
+have run the tests once across the project. The online book
+Dive-in-Python has an excellent introduction on &lt;code&gt;unittest&lt;/code&gt;. Also, you
+can start with &lt;a href="http://docs.python-guide.org/en/latest/writing/tests/#unittest"&gt;Hitchhiker's
+guide's introduction&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;&lt;strong&gt;7. Mixing &lt;code&gt;TAB&lt;/code&gt; and &lt;code&gt;SPACE&lt;/code&gt; in the same file&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;You will need no more reason to curse yourself just a while after. It
+will haunt you whenever you'll need to open the source-code in any
+editor other than your usual one. And, for others, "oh my! I can't
+literally even...".&lt;/p&gt;
+&lt;p&gt;And, while working with your code, some of your fellow programmers will
+"wish" for you like this girl:  &lt;/p&gt;
+&lt;p&gt;&lt;a href="https://i.imgur.com/URYofs4.jpg"&gt;&lt;img alt="the" src="https://i.imgur.com/URYofs4.jpg" /&gt;&lt;/a&gt;
+reading&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;... you’re weak, your bloodline is weak, and you will not survive the
+winter.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;While Python 3 will simply refuse to interpret this mixed file, in
+Python 2, the interpretation of TAB is as if it is converted to spaces
+using 8-space tab stops. So while executing, you may have no clue where
+a specific-line is being considered as which code-block's part.&lt;/p&gt;
+&lt;p&gt;For any code that you think someday someone else will read or use, to
+avoid confusion, you should stick
+with &lt;a href="http://legacy.python.org/dev/peps/pep-0008/#tabs-or-spaces"&gt;PEP-8&lt;/a&gt;,
+or your team-specific coding style. PEP-8 strongly discourage mixing TAB
+and Space in a same file.&lt;/p&gt;
+&lt;p&gt;Also, check out this &lt;a href="http://programmers.stackexchange.com/a/197839/74557"&gt;Q&amp;amp;A on
+StackExchange.&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;​1. The first downside is that it quickly becomes a mess&lt;/p&gt;
+&lt;p&gt;... Formatting should be the task of the IDE. Developers have already
+enough work to care about the size of tabs, how much spaces will an
+IDE insert, etc. The code should be formatted correctly, and displayed
+correctly on other configurations, without forcing developers to think
+about it.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Also, &lt;a href="http://www.secnetix.de/olli/Python/block_indentation.hawk"&gt;remember
+this&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Furthermore, it can be a good idea to avoid tabs altogether, because
+the semantics of tabs are not very well-defined in the computer world,
+and they can be displayed completely differently on different types of
+systems and editors. Also, tabs often get destroyed or wrongly
+converted during copy&amp;amp;paste operations, or when a piece of source code
+is inserted into a web page or other kind of markup code.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;That's all for now. That's my list.&lt;/p&gt;
+&lt;p&gt;At the end, thanks for visiting my post. Please share your experience
+what you think is the worst "un-pythonic" nightmare in Python code.&lt;/p&gt;</summary><category term="best practices"></category><category term="code quality"></category><category term="deadly"></category><category term="debugging"></category><category term="programming"></category><category term="python"></category><category term="software development"></category><category term="software documentation"></category><category term="worst practices"></category></entry><entry><title>[Step-by-step][How to] Generate ER diagram from a PostgreSQL (or any) database</title><link href="http://blog.kmonsoor.com/generate-er-diagram-from-sql-database.html" rel="alternate"></link><updated>2014-12-18T19:18:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-12-18:generate-er-diagram-from-sql-database.html</id><summary type="html">&lt;p&gt;When you are "study"-ing (for whatever reason) someone else's database,
+and the database has more than 10 tables, you are in trouble to
+understand what goes where.&lt;/p&gt;
+&lt;p&gt;Now, imagine a database with 300+ tables. It's like spaghetti, but not
+enjoyable. Rather, horrific.&lt;/p&gt;
+&lt;p&gt;I faced a similar challenge recently with a database of 250+ tables.
+Yes, i felt like in a deep sh*t. And, started looking for tools which
+can describe the tables in at least decent ER-diagram. If anything more,
+better. And, obviously free as my company is not paying.&lt;/p&gt;
+&lt;p&gt;Then, I found &lt;a href="http://schemaspy.sourceforge.net/"&gt;SchemaSpy&lt;/a&gt;, originally
+authored by &lt;a href="https://sites.google.com/site/johncurrier/"&gt;John Currier&lt;/a&gt;.
+It generate a complete in-depth HTML-based description (of course,
+including clickable ER-diagram) of the database, which you can then
+browse with your browser. My this post is on it's basic usage.
+&lt;!--more--&gt; The output will be kind of like this:
+&lt;a href="https://kmonsoor.files.wordpress.com/2014/12/schemapy_sample.png"&gt;&lt;img alt="schemapy_sample" src="https://kmonsoor.files.wordpress.com/2014/12/schemapy_sample.png?w=660" /&gt;&lt;/a&gt;
+It is based on Java technologies, but can work its magic on most of the
+major database technologies. But, you would need a appropriate JDBC
+connector for that database. Quote from the author:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;SchemaSpy uses JDBC's database metadata extraction services to gather
+the majority of its information, but has to make vendor-specific SQL
+queries to gather some information such as the SQL associated with a
+view and the details of check constraints.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Now, to use it, you need these staffs.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;First of all&lt;/strong&gt;, your system should have &lt;strong&gt;Java runtime&lt;/strong&gt; properly
+    installed. &lt;a href="https://java.com/en/download/index.jsp"&gt;Download from
+    here.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SchemaSpy, which is a .jar file&lt;/strong&gt;. Get it
+    here: &lt;a href="http://sourceforge.net/projects/schemaspy/files/"&gt;http://sourceforge.net/projects/schemaspy/files/&lt;/a&gt;. At the
+    time of writing, it was version 5.0.0.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;JDBC connector to PostgreSQL&lt;/strong&gt;. Make sure to match your PostgreSQL
+    version. You can download it from
+    here: &lt;a href="http://jdbc.postgresql.org/download.html"&gt;http://jdbc.postgresql.org/download.html&lt;/a&gt;. You can check your
+    PostgreSQL version by running: "SELECT version();" query on
+    &lt;strong&gt;&lt;em&gt;psql&lt;/em&gt;&lt;/strong&gt; prompt.&lt;/li&gt;
+&lt;li&gt;Also, SchemaSpy depends on &lt;strong&gt;GarphViz&lt;/strong&gt; to generate the ER-diagrams,
+    so you need to be installed it on your system. Get it from
+    here: &lt;a href="http://www.graphviz.org/Download..php"&gt;http://www.graphviz.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;And, of course PostgreSQL instance running &amp;amp; serving the database
+    you are trying to visualize.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Quoting from the author:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;SchemaSpy uses the dot executable from
+&lt;a href="http://www.graphviz.org/"&gt;Graphviz&lt;/a&gt; to generate graphical
+representations of the table/view relationships. This was initially
+added for people who see things visually. Now the graphical
+representation of relationships is a fundamental feature of the tool.
+Graphviz is not required to view the output generated by SchemaSpy,
+but &lt;strong&gt;the dot program should be in your PATH&lt;/strong&gt; (not CLASSPATH) when
+running SchemaSpy or none of the entity relationship diagrams will be
+generated (or use the
+&lt;a href="http://schemaspy.sourceforge.net/#gvparam"&gt;&lt;code&gt;-gv&lt;/code&gt;&lt;/a&gt; option).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;For convenience, i kept the  .jar files (JDBC-connector, and SchemaSpy)
+in my home folder. Now, in my case, My OS is Linux, my DB-host address
+is: 127.0.0.1, running PostgreSQL-9.3 at port 5432 . So, i run the
+command like this:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;java -jar ./schemaSpy_5.0.0.jar -t pgsql -host 127.0.0.1:5432 -db your_database_name -u your_DB_user_name -p your_password -s public -dp ./postgresql-9.3-1102.jdbc3.jar -o output_folder&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It may take a little while, depending on the size of the schema of the
+database. After that, you will find the output folder/directory named
+"output_folder". You'll some output when the magic is going on, like
+this.
+&lt;code&gt;Using database properties: [./schemaSpy_5.0.0.jar]/net/sourceforge/schemaspy/dbTypes/pgsql.properties Gathering schema details................(6sec) Writing/graphing summary......(2sec) Writing/diagramming details..........................(31sec) Wrote relationship details of 113 tables/views to directory 'output' in 41 seconds. View the results by opening output_folder/index.html&lt;/code&gt;
+Now, start browsing the generated docs from "index.html" in the output
+folder. Good luck. :)&lt;/p&gt;</summary><category term="db"></category><category term="db-schema"></category><category term="dbms"></category><category term="diagram"></category><category term="ER-diagram"></category><category term="graphviz"></category><category term="java"></category><category term="postgresql"></category><category term="programming"></category><category term="rdbms"></category><category term="schema"></category><category term="schemaspy"></category><category term="visualization"></category></entry><entry><title>How to become a programmer, or the art of Googling well</title><link href="http://blog.kmonsoor.com/how-to-become-a-programmer-or-the-art-of-googling-well.html" rel="alternate"></link><updated>2014-11-22T06:00:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-11-22:how-to-become-a-programmer-or-the-art-of-googling-well.html</id><summary type="html">&lt;p&gt;an epic revelation ...&lt;/p&gt;</summary></entry><entry><title>pep8_tonizer on for Notepad++ : Make your Python code PEP8-compliant on editor</title><link href="http://blog.kmonsoor.com/pep8_tonizer-on-for-notepad-make-your-python-code-pep8-compliant-on-editor.html" rel="alternate"></link><updated>2014-05-02T17:01:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-05-02:pep8_tonizer-on-for-notepad-make-your-python-code-pep8-compliant-on-editor.html</id><summary type="html">&lt;p&gt;&lt;em&gt;[ Please take note that this is still in beta phase. In other words, it
+still has issues.]&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;This script can be used to make python code, that is being edited on
+Notepad++,  to comply with infamous PEP8 coding style
+ [&lt;a href="http://bit.ly/pep8"&gt;http://bit.ly/pep8&lt;/a&gt;]&lt;br /&gt;
+By default, autopep8 only makes whitespace changes. So does this
+script.&lt;/p&gt;
+&lt;p&gt;However, this script depends on following:&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href="http://npppythonscript.sourceforge.net"&gt;Python Script for
+Notepad++&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This create the runtime environment for executing python scripts on
+Notepad++ objects. Install by downloading via:
+  &lt;a href="http://npppythonscript.sourceforge.net/download.shtml"&gt;http://npppythonscript.sourceforge.net/download.shtml&lt;/a&gt;&lt;br /&gt;
+(better choose the *.msi option)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="http://pypi.python.org/pypi/autopep8"&gt;autopep8&lt;/a&gt;&lt;/strong&gt;&lt;br /&gt;
+This is the main library module for checking &amp;amp; converting to
+PEP8-complying code. It, in turn, depends on
+&lt;a href="https://github.com/jcrocholl/pep8"&gt;pep8&lt;/a&gt;package.&lt;br /&gt;
+Installing steps via pip:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;pip install --upgrade pep8&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;pip install --upgrade autopep8&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Installation&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install&lt;strong&gt;pep8&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Install &lt;strong&gt;autopep8&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;install &lt;strong&gt;Python Script&lt;/strong&gt; for Notepad++&lt;/li&gt;
+&lt;li&gt;download &lt;a href="http://bit.ly/pep8_tonizer"&gt;&lt;strong&gt;pep8_tonizer.py&lt;/strong&gt;&lt;/a&gt; to a
+    convenient location&lt;/li&gt;
+&lt;li&gt;find &amp;amp; copy pep8.py &amp;amp; autopep8.py to \&amp;lt;Notepad++ install
+    dir&gt;\\plugins\PythonScript\lib&lt;/li&gt;
+&lt;li&gt;start notepad++&lt;/li&gt;
+&lt;li&gt;Go to Menu &gt;&gt; Plugins &gt;&gt; Python Script&lt;/li&gt;
+&lt;li&gt;click "New script"&lt;/li&gt;
+&lt;li&gt;find &amp;amp; select "pep8_tonizer.py"&lt;/li&gt;
+&lt;li&gt;Good job, all set.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;Usage&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;After opening / creating any python source file,&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Go to Menu &gt;&gt; Plugins &gt;&gt; Python Script &gt;&gt; Scripts&lt;/li&gt;
+&lt;li&gt;Click "pep8_tonizer.py"&lt;/li&gt;
+&lt;li&gt;Whoa !&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;TODO list&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;adding options for autopep8 style configurations, currently it works
+    as default&lt;/li&gt;
+&lt;li&gt;automate the setup processes(dependency check as well) as much as
+    possible&lt;/li&gt;
+&lt;li&gt;integrate the whole process into just 1 or 2 steps&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;hope, you will enjoy !&lt;/p&gt;</summary><category term="coding"></category><category term="editor"></category><category term="extension"></category><category term="free"></category><category term="ide"></category><category term="notepad++"></category><category term="pep8"></category><category term="plugin"></category><category term="programming"></category><category term="programming style"></category><category term="python"></category><category term="styleguide"></category><category term="tips"></category><category term="unofficial"></category><category term="web"></category><category term="windows"></category></entry><entry><title>একজন টিপিকাল বাবা</title><link href="http://blog.kmonsoor.com/%e0%a6%8f%e0%a6%95%e0%a6%9c%e0%a6%a8-%e0%a6%9f%e0%a6%bf%e0%a6%aa%e0%a6%bf%e0%a6%95%e0%a6%be%e0%a6%b2-%e0%a6%ac%e0%a6%be%e0%a6%ac%e0%a6%be.html" rel="alternate"></link><updated>2014-04-21T20:57:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-04-21:%e0%a6%8f%e0%a6%95%e0%a6%9c%e0%a6%a8-%e0%a6%9f%e0%a6%bf%e0%a6%aa%e0%a6%bf%e0%a6%95%e0%a6%be%e0%a6%b2-%e0%a6%ac%e0%a6%be%e0%a6%ac%e0%a6%be.html</id><summary type="html">&lt;p&gt;আমি জানি ফেসবুকে এইরকম "নিউজ"/শোক-স্ট্যাটাস প্রায়ই আসে। আমরাও গা-সওয়া
+হয়ে গেছে।&lt;/p&gt;
+&lt;p&gt;তোমার ওমুকে মারা গেছে, আমি কি করতে পারি? ফাস্ট লাইফ, ফাস্ট স্ক্রলিং-ডাউন
+...&lt;/p&gt;
+&lt;p&gt;তবে আমার একটু বাড়তি কথা বলার আছে ...&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;বাপ থাকতে আমরা বাপের মর্যাদা দেই না।&lt;/p&gt;
+&lt;p&gt;মায়ের জন্য অনেকের অনেক কথা আছে, ব্যথা আছে। ইসলামে মায়ের মর্যাদাও বেশি।
+কিন্তু বাপের কোনও বক্তব্য শোনার টাইম নাই।&lt;/p&gt;
+&lt;p&gt;বাবা কিন্তু শুরু থেকেই মোটামুটি unsung। সিনেমায় যেমন নায়ক/নায়িকাকে সবাই
+চেনে, রাস্তায় দেখলে অটোগ্রাফ নিতে দৌড়ায়, কিন্তু যে কিনা পুরা "নাটের
+গুরু", পরিচালক, পাবলিকে তার কোন খাওয়া নাই।&lt;/p&gt;
+&lt;p&gt;সংসারে মায়ের ২৪/৭ সার্ভিস টা দেখেই সব সন্তান বড় হয়, আর বাপ সকাল বেলায়
+অফিস যায়, সন্ধ্যায় ঘরে আসে। আর প্রায়ই উইকেন্ডে বন্ধু বান্ধবের সাথে আড্ডা
+মারতে যায়।  কি করে সংসারের জন্য?&lt;/p&gt;
+&lt;p&gt;আর মাও সকাল সন্ধ্যা বাবার এই "কীর্তিকলাপ" নিজেও "তিলাওয়াত" করে, আর
+অটোমেটিক বাচ্চাদের "হেফজ" হয়ে যায়।&lt;/p&gt;
+&lt;p&gt;ওদিকে, মাথা ব্যথা নিয়েও বাবা অফিসে যায়, পায়ে হেঁটে হোক আর বাসে ঝুলে হোক;
+ছুটি কাটা পরবে, ছুটি কমলে ছুটি-বেচা টাকা কমে যাবে বলে। রাতে বাচ্চাকে
+কোলে রাখতে হয়েছে বলে অফিসে ঝিমুনি এসে যায়; এজন্যে বসের সমস্ত উচ্চবাচ্য
+শুনে যায় নির্বাকে, বস রাগ করলে বেতন আঁটকে যাবে বলে।&lt;/p&gt;
+&lt;p&gt;অনেক দিনই সকালে ঘরে নাস্তা খেতে পারে না, বউ এর শরীর খারাপ বলে; একবারে
+অফিসের মিনি-মাগনা লাঞ্চ খেয়ে টাকা বাঁচায়।&lt;/p&gt;
+&lt;p&gt;মাসের ২৩/২৪ তারিখে একটু সুবিধায় থাকা কলিগের কাছে হাত পেতে ধার করে বাজার
+চালানোর জন্য। নয়ত ভাল-স্কুলে পড়া মেয়ের বেতন আঁটকে গেছে বলে।&lt;/p&gt;
+&lt;p&gt;বাকি-চালানোর মুদী দোকানদারও পাওনার কথা বারবার জানান দিতে থাকে। কিন্তু
+সংসারের চুলা তো বন্ধ থাকে না। নিজে না খেলে হয়ত পেটে একটু কষ্ট হবে,
+ছেলেমেয়ে না খেলে তো বুকটা হুহু করবে। রাস্তার জামে পড়ে হাজার ক্লান্ত হলেও
+বাজারটা হাতে নিয়েই ঘরে ঢুকতে হয়। নইলে দিন শেষে আদরের বাচ্চাদের সামনে
+বিবিসাব "অকর্মা" পদক দিয়ে দিবে। বউএর সব ঝাড়ি বাচ্চাদের দিকে তাকিয়ে হজম
+করে যায়, সংসার এর ভাঙ্গন ঠেকাতে। বউ হুমকি দেয়, "তোমার বাড়ি" ছেড়ে বাপের
+বাড়ি চলে যাবে বলে।&lt;/p&gt;
+&lt;p&gt;কিন্তু "অপদার্থ" বাবা কখনো এই হুমকি দিতে পারে না, নিজেরও বাপের বাড়ি থাকা
+সত্ত্বেও। নির্বাক শুনে যায়, কান্না করে শুধু বুকের ভিতর।&lt;/p&gt;
+&lt;p&gt;ছেলে মেয়ে বড় হয়ে যায়। আর বাবা?&lt;/p&gt;
+&lt;p&gt;আমার বাবার মতো ভালো কপাল হলে একদিন না বলে চলে যায়, আর নয়ত "স্ট্রোক" করে
+আরও "অপদার্থ" হয়ে যায়, কমপক্ষে প্রেশার, ডায়বেটিস এর ঔষধ হাতড়াতে থাকে।&lt;/p&gt;
+&lt;p&gt;আমি নিজে বাবা হবার আগে কিছুই বুঝিনি যে বাবা আসলে কি চায় ... কেনও চায় ...&lt;/p&gt;
+&lt;p&gt;বাবা আসলে "বকবক" করত জ্ঞ্যন দিতে না, আমি আসলে বাবার পাশে বসব কতক্ষণ
+এইজন্য। কথা বলত শুধু টাইম-পাসের উসিলা হিসেবে।&lt;/p&gt;
+&lt;p&gt;বাবা মাথা টিপে দিতে বলতো পেইন-কিলার এড়ানোর জন্য না, বরং সন্তানের স্পর্শ
+গায়ে লাগানর জন্যে।&lt;/p&gt;
+&lt;p&gt;সুন্দরি স্ত্রীর স্পর্শের চেয়েও যে কুৎসিত সন্তানের স্পর্শ কত বেশি
+ভালোলাগার, সেটা বুঝার আমার সময় তখনও হয়নি।&lt;/p&gt;
+&lt;p&gt;বাবা ঔষধের কথা বলে সকালে দেরি করিয়ে দেয়, আসলে সন্তানকে যাবার সময় একটু
+দেখতে।&lt;/p&gt;
+&lt;p&gt;বারবার সাবধান করত, এইজন্য না যে সন্তান বোকা, বরং নিজের মরার আগে যেন
+সন্তানের কোনও ক্ষতি দেখতে না হয়।&lt;/p&gt;
+&lt;p&gt;সন্তানের সব কটু কথা নির্বিকারে হাসিমুখে শুনে যায়, "ছোটবেলা থেকে ও একটু
+পাগলা" বলে।&lt;/p&gt;
+&lt;p&gt;আব্বা বেচে থাকলে আমি হাতিরঝিলে ঘুরাতে নিয়ে যেতাম হাওয়া খেতে, হাত ধরে
+ঘুরতাম, বাদাম ছিলে দিলাম।&lt;/p&gt;
+&lt;p&gt;মাসে / দুই মাসে একদিন ভালোমন্দ খাওতাম রেস্টুরেন্টে নিয়ে, গুলশানের খোশবু,
+নয়ত বসুন্ধরার ক্যপ্রিকরনে।&lt;/p&gt;
+&lt;p&gt;মাথা ব্যথার কথা বললে নাপা খেতে না বলে, টাইগার বাম দিয়ে মাথায় ডলে দিতাম।&lt;/p&gt;
+&lt;p&gt;বাজারে যাবার সময় কি খেতে মনে চায়, কমপক্ষে এক দুইটা আইটেম, শুনে যেতাম।&lt;/p&gt;
+&lt;p&gt;মার্কেটের যেই মোবাইলটা বাবার ভাল্লাগে, সেই মোবাইলটা কিনে দিতাম। আমার
+টাকা নষ্ট করতেছি বলে বকতো, কিন্তু কিনে দিলে না জানি কি খুশি টাই না হতো।&lt;/p&gt;
+&lt;p&gt;আমার DSLR দিয়ে পিছনে ঘোলা পোরট্রেইট তুলে দিতাম।&lt;/p&gt;
+&lt;p&gt;সন্ধ্যায় বাসায় ফিরে আব্বার পাশে বসে কফি খেতাম।&lt;/p&gt;
+&lt;p&gt;কিন্তু,আব্বাটাই যে নাই।&lt;/p&gt;
+&lt;p&gt;সিনেমার পরিচালকের মতো। credits এ নাম আছে, কেউ খেয়াল করে নাই ...&lt;/p&gt;</summary><category term="বাংলা"></category><category term="বাবা"></category><category term="মা"></category><category term="bangla"></category><category term="bengali"></category><category term="father"></category><category term="papa"></category><category term="rights"></category><category term="sacrifice"></category></entry><entry><title>Python fun #5 : Hi-performance RSS Content Downloader</title><link href="http://blog.kmonsoor.com/python-hi-performance-rss-content-downloader.html" rel="alternate"></link><updated>2014-04-15T19:45:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-04-15:python-hi-performance-rss-content-downloader.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;[Disclaimer:&lt;/em&gt;&lt;/strong&gt; In &lt;a href="https://www.python.org/"&gt;Python&lt;/a&gt; world, I am just
+a noobie. Sharing my experience along the way of learning. I am more
+than happy to hear from you.]&lt;/p&gt;
+&lt;p&gt;I just &lt;a href="https://gist.github.com/kmonsoor/10727871"&gt;completed a content
+downloader&lt;/a&gt; which grabs links
+from a given RSS feed, and then downloads all the linked contents
+simultaneously. "Bandwidth is your only limit" ;)&lt;/p&gt;
+&lt;p&gt;It DON'T work on Windows. Yet.&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;For the downloading part, it primarily depends on the
+&lt;a href="http://urlgrabber.baseurl.org"&gt;URLGrabber&lt;/a&gt; library which in turn depend
+on &lt;a href="http://pycurl.sourceforge.net/"&gt;PycURL&lt;/a&gt; library. On the other hand,
+for parallelism and other staffs it depends on Python's built-in
+libraries, e.g.
+&lt;a href="https://docs.python.org/2/library/multiprocessing.html"&gt;Multiprocessing&lt;/a&gt;,
+&lt;a href="https://docs.python.org/2/library/xml.etree.elementtree.html‎"&gt;XML
+parsing&lt;/a&gt;,
+&lt;a href="https://docs.python.org/2.7/library/urllib2.html‎"&gt;URLlib2&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can even use proxy settings, bandwidth-control, FTP's user/password
+etc.&lt;/p&gt;
+&lt;p&gt;Here it goes:&lt;/p&gt;
+&lt;p&gt;http://gist.github.com/kmonsoor/10727871&lt;/p&gt;
+&lt;p&gt;As, Wordpress.com don't allow GitHub code embedding, you have to click
+the link to check this out.&lt;/p&gt;
+&lt;p&gt;Thanks !&lt;/p&gt;</summary><category term="content"></category><category term="downloader"></category><category term="feed"></category><category term="multiple"></category><category term="parallel"></category><category term="python"></category><category term="RSS"></category></entry><entry><title>Python fun #4: Create sorted list of all possible numbers using same digits (of a number)</title><link href="http://blog.kmonsoor.com/python-create-list-of-all-possible-numbers-using-same-digits-of-a-number.html" rel="alternate"></link><updated>2014-01-31T15:00:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-01-31:python-create-list-of-all-possible-numbers-using-same-digits-of-a-number.html</id><summary type="html">&lt;p&gt;Let's say the number is 123.&lt;/p&gt;
+&lt;p&gt;Then the statement:&lt;br /&gt;
+[code language="python"]&lt;br /&gt;
+[int(''.join(x)) for x in permutations(list(str(123)))]&lt;br /&gt;
+[/code]&lt;br /&gt;
+will create a sorted list of all possible numbers using '1','2' and
+'3'.&lt;br /&gt;
+which is, [123, 132, 213, 231, 312, 321]&lt;/p&gt;
+&lt;h3&gt;What it is doing&lt;/h3&gt;
+&lt;p&gt;The part, &lt;strong&gt;permutations(list(str('123'&lt;/strong&gt; is creating a permutated tuple
+list of splitted string '123'.&lt;br /&gt;
+And the &lt;strong&gt;int(''.join(x))&lt;/strong&gt; is converting each tuple to back to
+Integer.&lt;/p&gt;
+&lt;p&gt;However, you need to&lt;br /&gt;
+[code language="python"]&lt;br /&gt;
+import permutations from itertools&lt;br /&gt;
+[/code]&lt;/p&gt;
+&lt;p&gt;so, the generalized version would be:&lt;br /&gt;
+[code language="python"]&lt;br /&gt;
+import permutations from itertools&lt;br /&gt;
+[int(''.join(x)) for x in list(permutations(list(str(n))))]&lt;br /&gt;
+[/code]&lt;/p&gt;</summary><category term="coding"></category><category term="combination"></category><category term="fun"></category><category term="itertools"></category><category term="list"></category><category term="permutation"></category><category term="python"></category><category term="tuple"></category></entry><entry><title>Python: Some Performance Scores</title><link href="http://blog.kmonsoor.com/python-some-performance-scores.html" rel="alternate"></link><updated>2014-01-27T15:20:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-01-27:python-some-performance-scores.html</id><summary type="html">&lt;p&gt;I just finished reading &lt;a href="http://sebastianraschka.com/Articles/2014_python_performance_tweaks.html" title="Sebastian Raschka's analytic discussion of Pyhton tweaks"&gt;Sebastian Raschka's analytic discussion of
+Pyhton
+tweaks&lt;/a&gt; where
+the author tested with Python version: &lt;strong&gt;&lt;em&gt;3.3.3&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Now, as I am a huge "fan" of Pythonic 1-liners, I made a summary of the
+article containing 1-liner-analysis-result.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Adding elements to dictionaries&lt;/strong&gt;&lt;br /&gt;
+Adding keys "By exploiting thrown KeyError exceptions via an try-except
+loop" is slightly(\~1.2x) faster than "(first,) checking if a key
+already exists in the Python dictionary using if-else loop"&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;strong&gt;Filtering lists via (simple) conditional statements&lt;/strong&gt;&lt;br /&gt;
+List comprehension is \~1.5x faster than typical if-else loop, and
+\~1.8x faster than "list(filter(lambda..." combination.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Creating lists using function calls&lt;/strong&gt;&lt;br /&gt;
+Using built-in map() method is \~3.4x faster than the for-loop, and \~
+1.5x faster than list comprehension approach.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;"So the bottom line of this analysis is that list comprehensions are
+ideal to create lists using simple evaluations via if-statements, and
+the in-built map() is the way to go for creating lists via function
+calls."&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Concatenating strings&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;"The .join() method is \~ 23x faster than the usage of the + operator
+to concatenate strings!"&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Assembling strings&lt;/strong&gt;&lt;br /&gt;
+Using the + operator to format(&amp;amp; concate) strings performs similar as
+'%' string formatting operator.&lt;/p&gt;
+&lt;p&gt;However, the format() function is, relatively, extremely slower (\~10x).&lt;/p&gt;
+&lt;p&gt;Thanks for reading. For further digging, you can also find all the
+details from the author in this Github repository:
+&lt;a href="https://github.com/rasbt/python_efficiency_tweaks"&gt;https://github.com/rasbt/python_efficiency_tweaks&lt;/a&gt;&lt;/p&gt;</summary><category term="coding"></category><category term="improvement"></category><category term="micro-optimization"></category><category term="performance"></category><category term="python"></category><category term="tips"></category><category term="tricks"></category><category term="tweak"></category></entry><entry><title>Python fun #3 : Directly Input from a text file to a processed 2-D list (in 1 statement)</title><link href="http://blog.kmonsoor.com/python-input-from-a-text-file-to-a-processed-2-d-list-in-1-line.html" rel="alternate"></link><updated>2014-01-18T21:50:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-01-18:python-input-from-a-text-file-to-a-processed-2-d-list-in-1-line.html</id><summary type="html">&lt;p&gt;Suppose you have input file like
+this(&lt;a href="https://projecteuler.net/project/triangle.txt"&gt;triangle.txt&lt;/a&gt;) to
+use as input ...&lt;/p&gt;
+&lt;p&gt;[code language="python"]&lt;br /&gt;
+with open('triangle.txt') as f:&lt;br /&gt;
+D = [[int(w) for w in line.split()] for line in f]&lt;br /&gt;
+[/code]&lt;/p&gt;
+&lt;p&gt;This will create a nice table-like 2-D list, i.e. a list of lists. The
+member list(s) can be of variable size. You can modify the&lt;em&gt; int(w) for w
+in line.split()&lt;/em&gt; part to incorporate your processing.&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;h3&gt;History&lt;/h3&gt;
+&lt;p&gt;For solving this &lt;a href="http://projecteuler.net/problem=67"&gt;problem&lt;/a&gt;, I was
+using this below code segment; so, i raised a &lt;a href="http://stackoverflow.com/q/21184445/617185"&gt;question on
+StackOverflow&lt;/a&gt; requesting a
+smart one-liner. That's how, I got the above 1-liner Python code.&lt;/p&gt;
+&lt;p&gt;My dumb code(yet, right) was:&lt;br /&gt;
+[code language="python"]&lt;br /&gt;
+f=open("triangle.txt")&lt;br /&gt;
+A=[]&lt;br /&gt;
+for i in range(100):&lt;br /&gt;
+A.append((f.readline()).strip())&lt;/p&gt;
+&lt;p&gt;// processing&lt;br /&gt;
+D=[]&lt;br /&gt;
+for i in range(100):&lt;br /&gt;
+D.append((A[i]).split())&lt;br /&gt;
+for i in range(100):&lt;br /&gt;
+for j in range(len(D[i])):&lt;br /&gt;
+D[i][j]= int(D[i][j])&lt;br /&gt;
+[/code]&lt;/p&gt;</summary><category term="2d"></category><category term="fun"></category><category term="interesting"></category><category term="list"></category><category term="one-liner"></category><category term="python"></category><category term="smart"></category><category term="stackoverflow"></category><category term="table"></category><category term="text-input"></category></entry><entry><title>Python fun #2 : Input directly from a text file to a List (in 1 statement)</title><link href="http://blog.kmonsoor.com/python-fun-2-input-directly-from-a-text-file-to-a-list.html" rel="alternate"></link><updated>2014-01-04T23:56:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-01-04:python-fun-2-input-directly-from-a-text-file-to-a-list.html</id><summary type="html">&lt;p&gt;Assuming the text file(names.txt) has the data as strings separated by
+comma&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;L = list(eval(open('names.txt').readlines()[0]))&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;what it is doing?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;It is inputting the whole file as a single string. It outputs a
+&lt;a href="http://docs.python.org/2/tutorial/datastructures.html#tuples-and-sequences"&gt;&lt;strong&gt;Tuple&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The &lt;a href="http://www.tutorialspoint.com/python/list_list.htm"&gt;list()&lt;/a&gt; method
+converting that into a nice
+&lt;a href="http://docs.python.org/2/tutorial/datastructures.html"&gt;&lt;strong&gt;List&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can use it by changing slightly according to your input file format.&lt;/p&gt;</summary><category term="coding"></category><category term="file"></category><category term="fun"></category><category term="list"></category><category term="programming"></category><category term="python"></category><category term="tips"></category><category term="tricks"></category><category term="tuple"></category></entry><entry><title>Python fun # 1</title><link href="http://blog.kmonsoor.com/python-fun-1.html" rel="alternate"></link><updated>2014-01-04T23:33:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2014-01-04:python-fun-1.html</id><summary type="html">&lt;p&gt;i am starting this series (Python fun) as a log of my amazement along
+the way of learning Python.&lt;/p&gt;
+&lt;p&gt;.....&lt;/p&gt;
+&lt;p&gt;To reverse a list or string X,&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;X[::-1]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It is actually a tricky application of Python's &lt;a href="http://docs.python.org/2.3/whatsnew/section-slices.html"&gt;built-in slicing
+mechanism's
+extension.&lt;/a&gt;&lt;/p&gt;</summary><category term="coding"></category><category term="fun"></category><category term="learning"></category><category term="programming"></category><category term="python"></category></entry><entry><title>Ad vs. Content :: Profitability vs. Readability</title><link href="http://blog.kmonsoor.com/ad-vs-content-profitability-vs-readability.html" rel="alternate"></link><updated>2013-12-28T23:29:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2013-12-28:ad-vs-content-profitability-vs-readability.html</id><summary type="html">&lt;p&gt;&lt;em&gt;P.S. I am basically a software engineer, while i am writing this up as
+just as an UX enthusiast's fan out of frustrations. So, never mind if
+you are an expert on this subject matter.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;For quite a while, i am totally unhappy with overall readability of most
+of the web sites, especially the heavy traffic sites. Why they make
+their pages filled with crapland-ish ads? To add a little salt on the
+burn, they kept doing pagination. As a preventive measure, I kept using
+browser-extensions like
+&lt;a href="https://chrome.google.com/webstore/detail/readability/oknpjjbmpnndlpmnhmekjpocelpnlfdi"&gt;readability&lt;/a&gt;,
+&lt;a href="https://chrome.google.com/webstore/detail/minimalist-for-everything/bmihblnpomgpjkfddepdpdafhhepdbek"&gt;minimalistic&lt;/a&gt;,
+&lt;a href="https://chrome.google.com/webstore/detail/hacker-vision/fommidcneendjonelhhhkmoekeicedej"&gt;hacker
+vision&lt;/a&gt;
+etc.&lt;br /&gt;
+Is that so tough to create well-designed site with keeping up site's
+profitability? In their long run, does their insane amount of ad-pushing
+don't hurt or not?&lt;/p&gt;
+&lt;p&gt;A question on UX.StackExchange just fueled my frustrations. [&lt;a href="http://ux.stackexchange.com/q/21375/21647"&gt;Is there a
+point to paginating articles
+online?&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;IMAO, Most of the high-traffic sites still miss some very important
+points from user perspective.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Over the time&lt;/strong&gt;, since the online era, our subconscious as well as
+    conscious mind are well-trained to ignore ads altogether and focus
+    on the content, mostly on relevant picture. e.g. when i entered a
+    NYTimes for news on Iraq, the new shiny Ford(ad) is totally
+    irrelevant (hence, irritating). In return, my subconscious mind take
+    a silent note on this irritation (entirely due to the ad).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;As a try to address&lt;/strong&gt; the fact, ad engines (syndicates) tried to
+    deliver contextual ads and collect and relate search data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;What is the result?&lt;/strong&gt;  once i just needed to know(so, searched) a
+    fact about Nikon D800. Now, everywhere i just see ads of DSLRs. As i
+    already have one, i am not even remotely interested to buy another
+    one. Now, what? My irritation just got a polynomial factor.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Our monitors&lt;/strong&gt;, even on laptops, are mostly now widescreen(16:9)
+    rather than archaic 4:3. But, the sites mostly are failing to adopt
+    the new display real-estate. Instead the ad's column (on the right)
+    just multiplied.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Yet still, Pagination&lt;/strong&gt; is the worst factor to "dishonor" the
+    visitor's "mission statement". Dividing a single writeup into 4
+    pages for the sake of showing ads, is just like "holy" water from a
+    fountain of hell. Pagination has being tagged along from the dawn of
+    Internet to break the "payload" into smaller pieces due to slow
+    bandwidth. But now, used as wonderful way to push ads.  Wherever i
+    see  &lt;em&gt;"&lt;span style="text-align:center;line-height:1.5em;"&gt;Page |  1
+    |&lt;/span&gt;&lt;strong&gt;2&lt;/strong&gt;&lt;span style="text-align:center;line-height:1.5em;"&gt; | 3
+    | 4|",&lt;/span&gt;&lt;/em&gt;&lt;span style="text-align:center;line-height:1.5em;"&gt;my
+    subconscious tells me that as&lt;/span&gt;&lt;em&gt;&lt;span
+    style="text-align:center;line-height:1.5em;"&gt; "the content is not
+    for reading, just a packet for ads." or "why bother to read that
+    all? Let's click some ads"&lt;/span&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Every time, i want to see the text bigger, i got to do CTRL+Scroll
+    on mouse.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;I don't remember the last time i clicked an ad. When were your last
+    time?  Seems like &lt;strong&gt;&lt;em&gt;"ads, ads everywhere. nor any drop to
+    click".&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In my Utopian world of Internet,  i would design reading-friendly and
+readable (yet, revenue generating) site like this.&lt;/p&gt;
+&lt;p&gt;What do you think ?&lt;/p&gt;
+&lt;p&gt;btw, i am keeping this design work licensed under a &lt;a href="http://creativecommons.org/licenses/by-sa/4.0/"&gt;Creative Commons
+by-sa 4.0 license&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://i.stack.imgur.com/0RZ4u.png"&gt;&lt;img alt="" src="http://i.stack.imgur.com/0RZ4u.png" /&gt;&lt;/a&gt;&lt;/p&gt;</summary><category term="profit"></category><category term="profitability"></category><category term="readability"></category><category term="technology"></category><category term="ui"></category><category term="UX"></category></entry><entry><title>[UX] Should my blank query (on a site) return any result ? [yet to complete]</title><link href="http://blog.kmonsoor.com/ux-what-should-blank-query-return.html" rel="alternate"></link><updated>2013-12-17T01:21:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2013-12-17:ux-what-should-blank-query-return.html</id><summary type="html">&lt;p&gt;While i was going through some site, i was looking for something. Okay,
+i admit it was a job site.I wanted to begin from ALL results then filter
+it down. So, I just hit "Search" without giving any query.&lt;/p&gt;
+&lt;p&gt;Should it return me with all or nothing?&lt;/p&gt;
+&lt;p&gt;I raised a question in &lt;a href="http://ux.stackexchange.com/questions/49080/what-should-be-fetched-if-someone-search-with-blank-queries"&gt;UX forum of
+StackExchange&lt;/a&gt;
+(u know StackOverflow, right ?!) about that. What should be the smart
+approach to the classic UX problem? What is the current trend? What it
+should be ?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;My Question was:&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Almost all site include a "Search" facility. It can be a job site,
+blog, photography-sale, or forum.&lt;/p&gt;
+&lt;p&gt;usual format is like:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="mockup" src="http://i.stack.imgur.com/mnQOP.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://ux.stackexchange.com/plugins/mockups/download?image=http%3a%2f%2fi.stack.imgur.com%2fmnQOP.png"&gt;download bmml
+source&lt;/a&gt; –
+Wireframes created with &lt;a href="http://www.balsamiq.com/products/mockups"&gt;Balsamiq
+Mockups&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Question is:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;If user keep the input box empty, and hit ENTER (or click "Search"
+button), what should (s)he get ?&lt;/p&gt;
+&lt;p&gt;What would be the &lt;strong&gt;&lt;em&gt;smartest&lt;/em&gt;&lt;/strong&gt; UX approach ?&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;return &lt;strong&gt;ALL&lt;/strong&gt; e.g. Google jobs site&lt;/li&gt;
+&lt;li&gt;return &lt;strong&gt;NOTHING&lt;/strong&gt;, and notify user to enter search term&lt;/li&gt;
+&lt;li&gt;bring up the dedicated &lt;strong&gt;search page&lt;/strong&gt; e.g. this site&lt;/li&gt;
+&lt;li&gt;return the &lt;strong&gt;HOT items&lt;/strong&gt; right now on the site&lt;/li&gt;
+&lt;li&gt;return the &lt;strong&gt;MOST_SEARCHED&lt;/strong&gt; items, or&lt;/li&gt;
+&lt;li&gt;return some &lt;strong&gt;RANDOM items&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;does NOTHING&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Is there any &lt;strong&gt;&lt;em&gt;standard&lt;/em&gt;&lt;/strong&gt;, &lt;strong&gt;&lt;em&gt;de facto&lt;/em&gt;&lt;/strong&gt;, or research findings on
+this concern?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It started a lot of views (400 hits on first day) as well as answers,
+comments opinion. I got the point that it rang some bell.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;I believe now that it's an classic question.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;i also did some fact-finding along the way. What is the approach of the
+leading web sites around the globe ?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Google / Bing&lt;/strong&gt;: "Google and Bing handle this and their flow is to
+just ignore the search request if there is no search value entered and
+keep the user in the same page." (Thanks, @Mervin on StackExchange)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Amazon&lt;/strong&gt;: return back to homepage with an extra
+"&lt;em&gt;/ref=nb_sb_noss_null"&lt;/em&gt; in the link&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Google Jobs&lt;/strong&gt;: returns ALL, sorted by "logging-location" and
+reverse-chrono. Page navigation says "Page 1 of many"&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Chrome Web Store&lt;/strong&gt;: just does nothing on pressing ENTER&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Gmail&lt;/strong&gt;: It is quite interesting. While in inbox, pressing "search"
+does nothing. But when user gives &lt;em&gt;blank&lt;/em&gt;in advanced search, it (IMO,
+rightfully returns &lt;strong&gt;ALL Mails&lt;/strong&gt;) with a notif. as &lt;em&gt;"Invalid search
+query - returning all mail."&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://i.stack.imgur.com/ZTTnx.png"&gt;&lt;img alt="gmail blank query
+message" src="http://i.stack.imgur.com/ZTTnx.png" /&gt;&lt;/a&gt;&lt;/p&gt;</summary><category term="natural"></category><category term="query"></category><category term="search"></category><category term="smartnesss"></category><category term="user-friendly"></category><category term="UX"></category><category term="web2"></category></entry><entry><title>On The Way to Enlightenment</title><link href="http://blog.kmonsoor.com/on-the-way-to-enlightenment.html" rel="alternate"></link><updated>2013-11-21T19:20:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2013-11-21:on-the-way-to-enlightenment.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.flickr.com/photos/kmonsoor/10977618016/"&gt;&lt;img alt="On The Way to
+Enlightenment" src="http://kmonsoor.files.wordpress.com/2013/11/educationforall_signed.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;</summary><category term="Bangladesh"></category><category term="education"></category><category term="globalization"></category><category term="indegineous"></category><category term="inspiration"></category><category term="knowledge"></category><category term="passionforknowledge"></category><category term="schooleducation"></category><category term="student"></category><category term="transport"></category><category term="tribal"></category><category term="underdeveloped"></category></entry><entry><title>[LG SU660][Optimus 2X][CyanogenMod] Files You need to Mod...</title><link href="http://blog.kmonsoor.com/lg-su660-optimus2x-files-you-need-to-mod.html" rel="alternate"></link><updated>2013-10-03T14:31:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2013-10-03:lg-su660-optimus2x-files-you-need-to-mod.html</id><summary type="html">&lt;p&gt;[&lt;strong&gt;Disclaimer:&lt;/strong&gt;  Plz download &amp;amp; Use these files on your own
+responsibility. Personally, I have used all these files on my own SU660.
+I am just MIRRORING these file]&lt;/p&gt;
+&lt;p&gt;[&lt;strong&gt;General Advice:000&lt;/strong&gt;  If you&lt;strong&gt;don't know&lt;/strong&gt; what is rooting, modding,
+custom recovery or never heard of CyanogenMod, ClockWorkMod etc., &lt;strong&gt;JUST
+STAY AWAY&lt;/strong&gt; off this posts, or any of these contents ]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Download                                                   MD5
+Checksum                                                                
+    Reference Page&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://dl.dropboxusercontent.com/u/7784941/cm-10-1-NIGHTLY-su660-fixed.zip"&gt;&lt;strong&gt;cm-10-1-NIGHTLY-su660-fixed.zip&lt;/strong&gt;&lt;/a&gt;
+     2847b5e4c3853ad3c3313ace8440c8f0&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://www.dropbox.com/s/cod19km2xveph8c/gapps-jb-20121212-signed.zip"&gt;gapps-jb-20121212-signed.zip&lt;/a&gt;&lt;/strong&gt; 
+      c4a07a24e11448824b84e314600cd357          
+  &lt;a href="http://forum.xda-developers.com/showthread.php?t=2020737"&gt;http://wiki.cyanogenmod.org/w/Gapps&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://dl.dropboxusercontent.com/u/7784941/IntSD-MountFix.zip"&gt;IntSD-MountFix.zip&lt;/a&gt;&lt;/strong&gt; 
+                           82068467ae955f29147b89b76da25c2f            
+    &lt;a href="http://forum.xda-developers.com/showthread.php?t=2020737"&gt;http://forum.xda-developers.com/showthread.php?t=2020737&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://dl.dropboxusercontent.com/u/7784941/kowalski-kernel-100p5-oldbl_CM10.1.zip"&gt;kowalski-kernel...CM10.1.zip&lt;/a&gt;&lt;/strong&gt; 
+      91d9ab1434c0b79c631551d23052b6ab              
+ &lt;a href="http://forum.xda-developers.com/showthread.php?t=2158710"&gt;http://forum.xda-developers.com/showthread.php?t=2158710&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://www.dropbox.com/s/2tfzdcndv5bbnhd/nvflash-cleaner-v0.2.zip"&gt;nvflash-cleaner-v0.2.zip&lt;/a&gt;&lt;/strong&gt; 
+                 1a5066c2375350d61d3b16136ef87cce                
+ &lt;a href="http://forum.xda-developers.com/showthread.php?t=1968280"&gt;http://forum.xda-developers.com/showthread.php?t=1968280&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://dl.dropboxusercontent.com/u/7784941/o2x-bootloader-v0.6.zip"&gt;o2x-bootloader-v0.6.zip&lt;/a&gt;&lt;/strong&gt; 
+                  828142587937621da77d10abcfc1bd46                
+ &lt;a href="http://forum.xda-developers.com/showthread.php?t=1954903"&gt;http://forum.xda-developers.com/showthread.php?t=1954903&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://www.dropbox.com/s/ur3hk64w5d4mt9r/APX%20Driver.zip"&gt;nVidia APX
+Driver&lt;/a&gt;&lt;/strong&gt;   
+                              07e645f9a73210cf3a0ca2b790eaca32          
+        &lt;a href="http://forum.xda-developers.com/showthread.php?t=2206515"&gt;http://forum.xda-developers.com/showthread.php?t=2206515&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;You can check the MD5 checksum of any file using this &lt;a href="http://www.winmd5.com/"&gt;freeware software
+tool, &lt;strong&gt;WinMD5&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Some other Downloads:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Google Apps for CM10.2(JellyBean)      
+ &lt;a href="http://goo.im/gapps/gapps-jb-20130813-signed.zip"&gt;gapps-jb-20130813-signed&lt;/a&gt;&lt;/strong&gt;
+               1f51b5cc6370c1f45dc951109b6ce6ed                
+  &lt;a href="http://wiki.cyanogenmod.org/w/Gapps"&gt;http://wiki.cyanogenmod.org/w/Gapps&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For detailed step-by-step on flashing, plz follow
+ &lt;a href="http://imthefortune7.blogspot.com/2013/05/guide-cyanogenmod-101-aka-jelly-bean.html"&gt;http://imthefortune7.blogspot.com/2013/05/guide-cyanogenmod-101-aka-jelly-bean.html&lt;/a&gt;&lt;/p&gt;</summary><category term="APX"></category><category term="CM10.1"></category><category term="cyanogen"></category><category term="cyanogenmod"></category><category term="gapps"></category><category term="JB"></category><category term="kernel"></category><category term="kowalski"></category><category term="lg"></category><category term="lge"></category><category term="mirror"></category><category term="mountfix"></category><category term="nvidia"></category><category term="optimus"></category><category term="su660"></category></entry><entry><title>Null or Full</title><link href="http://blog.kmonsoor.com/null-or-full.html" rel="alternate"></link><updated>2013-03-24T17:44:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2013-03-24:null-or-full.html</id><summary type="html">&lt;p&gt;&lt;a href="http://www.flickr.com/photos/kmonsoor/8585788868/in/photostream"&gt;&lt;img alt="Null or
+Full" src="http://kmonsoor.files.wordpress.com/2013/03/full-or-null-edit-exp.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Null or Full&lt;/p&gt;</summary><category term="full"></category><category term="kliqs"></category><category term="kmonsoor"></category><category term="null"></category><category term="photography"></category><category term="sky"></category><category term="tree"></category><category term="winter"></category><category term="zen"></category></entry><entry><title>[Bangla][Font Design] Optimized Workflow for Basic Characters Design</title><link href="http://blog.kmonsoor.com/banglafont-design-optimized-workflow-for-basic-characters-design.html" rel="alternate"></link><updated>2013-02-12T19:06:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2013-02-12:banglafont-design-optimized-workflow-for-basic-characters-design.html</id><summary type="html">&lt;p&gt;[caption id="" align="aligncenter" width="701"]&lt;a href="http://kmonsoor.files.wordpress.com/2013/02/screenshot109.png"&gt;&lt;img alt="[Bangla][Font Design]
+Optimized Workflow for Basic Characters
+Design" src="http://kmonsoor.files.wordpress.com/2013/02/screenshot109.png" /&gt;&lt;/a&gt;
+Optimized Workflow for Basic Characters Design[/caption]&lt;/p&gt;</summary><category term="বাংলা"></category><category term="bangla"></category><category term="Bangladesh"></category><category term="bengali"></category><category term="character grouping"></category><category term="design"></category><category term="font"></category><category term="fontography"></category><category term="type design"></category><category term="workflow"></category></entry><entry><title>Print-friendly PDF of "How Browsers Work" by Tali Garsiel</title><link href="http://blog.kmonsoor.com/pdf-of-how-browsers-work-by-tali-garsiel.html" rel="alternate"></link><updated>2013-01-06T18:17:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2013-01-06:pdf-of-how-browsers-work-by-tali-garsiel.html</id><summary type="html">&lt;p&gt;I got the masterpiece article "How Browsers Work" through
+&lt;a href="http://HTML5rocks.com" title="HTML5rocks.com"&gt;HTML5rocks.com&lt;/a&gt;. But wondering
+to find a printer-friendly version, or PDF of the article. "Not found"&lt;/p&gt;
+&lt;p&gt;Then I followed the original articles link to &lt;a href="http://taligarsiel.com/Projects/howbrowserswork1.htm"&gt;Tali's
+site&lt;/a&gt; to get that.
+"Not found".&lt;/p&gt;
+&lt;p&gt;That's why I decided to publish my own printing-friendly as well as
+reading-friendly "formatted" version of the great article. I didn't
+modify the content of the article, not even a single word. I did only
+the formatting. That took several hours. :)&lt;/p&gt;
+&lt;p&gt;Here it is: &lt;a href="http://bit.ly/howBrowsersWorkPDF"&gt;http://bit.ly/howBrowsersWorkPDF&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;For non-commercial use, feel free to use or share my edition.&lt;/p&gt;
+&lt;p&gt;However, for commercial purpose, you need to contact me first.&lt;/p&gt;</summary><category term="free"></category><category term="Garsiel"></category><category term="how browser work"></category><category term="html5"></category><category term="HTML5rocks."></category><category term="PDF"></category><category term="printer"></category><category term="reader"></category><category term="reading"></category><category term="rocks"></category><category term="software"></category><category term="Tali"></category><category term="unofficial"></category><category term="web"></category></entry><entry><title>[Solved] Chrome Browser Installation Trouble: Bangladesh or anywhere</title><link href="http://blog.kmonsoor.com/solved-bangladesh-chrome-browser-installation-trouble.html" rel="alternate"></link><updated>2012-10-08T21:20:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-10-08:solved-bangladesh-chrome-browser-installation-trouble.html</id><summary type="html">&lt;p&gt;&lt;a href="http://kmonsoor.files.wordpress.com/2011/04/google_chrome.png"&gt;&lt;img alt="" src="http://kmonsoor.files.wordpress.com/2011/04/google_chrome.png" title="My Personal List of Awesome-yet-Free Software and Web Services" /&gt;&lt;/a&gt;I
+live in Dhaka, Bangladesh. Now.&lt;/p&gt;
+&lt;p&gt;Today, I have suffered a lot for (re)installing the Chrome browser on my
+office laptop. Installer was downloaded,&lt;/p&gt;
+&lt;p&gt;but when I ran it, it was stuck in "&lt;strong&gt;&lt;em&gt;Connecting to internet&lt;/em&gt;&lt;/strong&gt;..."&lt;/p&gt;
+&lt;p&gt;and after a long time It showed an error message that
+&lt;strong&gt;&lt;em&gt;"GoogleUpdate.exe cannot connect to Internet"&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;At first, I thought the firewall or company domain is blocking that. But
+after a heck lot of hacking, working around, I confirmed that I am
+wrong. Due to Bangladesh Govt. recent (but now uplifted) anti-Google
+policy, the outgoing traffic is being blocked.&lt;/p&gt;
+&lt;p&gt;So, the solution is to download standalone version which will not need
+internet to be installed on PC. Its about 30 MB in size. But, from where
+will you download this ?!?&lt;/p&gt;
+&lt;p&gt;It's always best to download latest ones from here:
+&lt;a href="http://www.google.com/chrome/eula.html?standalone=1"&gt;http://www.google.com/chrome/eula.html?standalone=1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;or, else you can download it from my hosted mirror on Dropbox: 
+&lt;a href="http://db.tt/5pnQ7YCz"&gt;http://db.tt/5pnQ7YCz&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;(Update)&lt;/em&gt;&lt;/strong&gt;&lt;strong&gt; &lt;/strong&gt;Please download the latest one on this
+link: &lt;a href="http://goo.gl/NXrBz"&gt;http://goo.gl/NXrBz&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If you download the hosted one, you need to check the security/integrity
+of the downloaded file, by checking the publisher when you'll run the
+downloaded installer application. Like below:&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://kmonsoor.files.wordpress.com/2012/10/screenshot050.png"&gt;&lt;img alt="Check File's Integrity by checking the publisher's name. Because,
+this cannot be changed except by Google
+itself." src="http://kmonsoor.files.wordpress.com/2012/10/screenshot050.png" title="Check File's Integrity" /&gt;&lt;/a&gt;&lt;br /&gt;
+Hey, don't forget to press the &lt;strong&gt;&lt;em&gt;thanks&lt;/em&gt;&lt;/strong&gt;or share button. Good Luck 
+:)&lt;/p&gt;</summary><category term='"Connecting to internet"'></category><category term='"GoogleUpdate.exe cannot connect to Internet"'></category><category term="Bangladesh"></category><category term="bangladesh govt"></category><category term="chrome"></category><category term="dhaka bangladesh"></category><category term="error"></category><category term="fail"></category><category term="google"></category><category term="how-to"></category><category term="install"></category><category term="installer application"></category><category term="resolve"></category><category term="software"></category><category term="technology"></category><category term="trouble"></category><category term="www google"></category></entry><entry><title>(Mobile friendly) Standard Chartered ATMs in Dhaka (+ Bangla details)</title><link href="http://blog.kmonsoor.com/standard-chartered-atms-in-dhaka-described-location.html" rel="alternate"></link><updated>2012-09-09T01:08:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-09-09:standard-chartered-atms-in-dhaka-described-location.html</id><summary type="html">&lt;p&gt;( INCOMPLETE )&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Farmgate&lt;/strong&gt; --&lt;/p&gt;
+&lt;p&gt;In the middle of farmgate bus-stand and bijoy sarani; after Tejgaon
+thana, and YanToon Chinese restaurant; on opposite of Lion shopping
+center&lt;/p&gt;
+&lt;p&gt;Google maps @ &lt;a href="http://goo.gl/maps/BvIVe"&gt;http://goo.gl/maps/BvIVe&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;ফার্মগেট থেকে বিজয় স্বরনীর দিকে যেতে হাতের ডানে; লায়ন শপিং সেন্টারের
+বিপরীত পাশে&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Mohammadpur --&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Ring Road, Mohammadpur (near Japan Garden City)&lt;/p&gt;
+&lt;p&gt;Google maps @ &lt;a href="http://goo.gl/maps/0oIBu"&gt;http://goo.gl/maps/0oIBu&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;মুহাম্মদপুর শিয়া মসজিদ মোড় এর উত্তরে "জাপান গার্ডেন সিটি" র ২নং
+গেটের বিপরীত পাশে;  শিয়া মসজিদ এবং প্রিন্স বাজারের মাঝামাঝি&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Rampura&lt;/strong&gt; --&lt;/p&gt;
+&lt;p&gt;Official Address:  360/1/1 DIT Road, East Rampura.&lt;/p&gt;
+&lt;p&gt;Google maps@ &lt;a href="http://goo.gl/maps/rKmPo"&gt;http://goo.gl/maps/rKmPo&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Actual location:  In the middle between Rampura bazar &amp;amp; TV center. @
+Opposite of "Swapna" departmental store&lt;/p&gt;
+&lt;p&gt;রামপুরা বাজার আর টিভি সেন্টারের মাঝামাঝি জায়গায়; "স্বপ্ন" দোকানটার
+বিপরীত দিকে&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Gulshan&lt;/strong&gt; 1 ATM--&lt;/p&gt;
+&lt;p&gt;Official Address:  House SE(C) 2, Road 138, Gulshan Avenue, Gulshan 1&lt;/p&gt;
+&lt;p&gt;Google maps@ &lt;a href="http://goo.gl/maps/bXNsl"&gt;http://goo.gl/maps/bXNsl&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Actual location: From the center of Gulshan-1, head towards
+south(towards Indian visa consulate). ATM is on the side of Abucus
+restaurant (NOT Abucus convention center); same building as of Thailand
+visa center&lt;/p&gt;
+&lt;p&gt;গুলশান-১ থেকে দক্ষিনে (ইন্ডিয়ান দুতাবাস এর দিকের রাস্তায়) এগিয়ে হাতের
+বামে; এবাকাস রেস্তরাঁর পরেই; থাইল্যান্ড ভিসা সেন্টারের একই বিল্ডিংয়ে&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Gulshan 1 Branch ATM&lt;/strong&gt;--&lt;/p&gt;
+&lt;p&gt;Official Address:  67 Gulshan Avenue&lt;/p&gt;
+&lt;p&gt;Google maps@ &lt;a href="http://goo.gl/maps/jUO31"&gt;http://goo.gl/maps/jUO31&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Actual location:  From the center of Gulshan-1, head towards north.
+Cross Uday tower, and Westecs. The branch is on the left. ATM is
+adjacent.&lt;/p&gt;
+&lt;p&gt;গুলশান-১ থেকে উত্তরে (উদয় টাওয়ারের দিকের রাস্তায়) এগিয়ে হাতের বামে
+(হাঁটা দুরত্ব); উদয় টাওয়ার, ওয়েস্টেকস পার হয়ে; ব্র্যাঞ্চ এর পাশে;
+ব্র্যাক ব্যাংকের এটিএম এর বিপরীত পাশে&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Karwan Bazar branch ATM --&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Official Address: 53 Kawran Bazar&lt;/p&gt;
+&lt;p&gt;Google maps@  &lt;a href="http://goo.gl/maps/waFVL"&gt;http://goo.gl/maps/waFVL&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Actual location: From the center of Karwan bazar, head towards
+North-west (towards Farmgate). Near the LaVinci hotel. The branch is on
+the right. ATM is adjacent.&lt;/p&gt;
+&lt;p&gt;কারওয়ান বাজার মোড় থেকে উত্তর-পশ্চিম দিকের রাস্তায় (ফার্মগেটের দিকে যেতে)
+হাতের ডানে. লা ভিঞ্চি হোটেলের কাছাকাছি&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Sonargaon Hotel Branch ATM --&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Official Address:  L101 Pan Pacific Sonargaon Hotel, 107 Kazi Nazrul
+Islam Ave&lt;/p&gt;
+&lt;p&gt;Google maps @ &lt;a href="http://goo.gl/maps/nYnsE"&gt;http://goo.gl/maps/nYnsE&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Actual location: From the center of Karwan bazar, enter through the main
+gate of Sonargaon hotel; now just ask somebody ;)&lt;/p&gt;
+&lt;p&gt;সোনারগাঁ হোটেলের মেইন গেট এ ঢুকে কাউকে জিগ্গেস করেন ;)&lt;/p&gt;
+&lt;p&gt;Sources / inspirations:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;SCB website&lt;/li&gt;
+&lt;li&gt;Google Maps&lt;/li&gt;
+&lt;li&gt;Personal experiences&lt;/li&gt;
+&lt;li&gt;ব্যক্তিগত ভোগান্তি&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="ATM"></category><category term="Bangladesh"></category><category term="chartered"></category><category term="described"></category><category term="details"></category><category term="dhaka"></category><category term="easy"></category><category term="helpful"></category><category term="location"></category><category term="scb"></category><category term="standard"></category></entry><entry><title>Increase virtual disk size in VirtualBox, host: Windows 7, Guest: OpenSuse. Format: Step-by-step</title><link href="http://blog.kmonsoor.com/virtualbox-increase-disk-size.html" rel="alternate"></link><updated>2012-05-26T20:19:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-05-26:virtualbox-increase-disk-size.html</id><summary type="html">&lt;div&gt;
+
+[![](http://kmonsoor.files.wordpress.com/2012/05/virtualbox_logo_small.jpg "Virtualbox_logo_small")](http://kmonsoor.files.wordpress.com/2012/05/virtualbox_logo_small.jpg)
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+   Stuck with your small virtual disk partition for VirtualBox? You
+created for some testing &amp; practicing, now it needs space. I also stuck
+with same problem; researched many forums, and here is the gist. Find
+out how \&gt;\&gt;\&gt;
+
+&lt;/div&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;strong&gt;[ Update&lt;/strong&gt;: (Thanks to user, Suman) This procedure &lt;strong&gt;won't work for VM
+with snapshots&lt;/strong&gt;. So, plz take note about your system beforehand. &lt;strong&gt;]&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Download &lt;a href="http://sourceforge.net/projects/gparted/"&gt;&lt;strong&gt;&lt;em&gt;Gparted&lt;/em&gt;&lt;/strong&gt;, disk manager for
+    Linux&lt;/a&gt;. It'll come as an
+    ISO file.&lt;/li&gt;
+&lt;li&gt;Boot into your guest OS, check,  with &lt;strong&gt;&lt;em&gt;df&lt;/em&gt;&lt;/strong&gt; command,  which
+    partition you need to grow. Take note of that specific mounted HD,
+    such as /dev/hdb/sda3&lt;/li&gt;
+&lt;li&gt;Take backup of your existing data, as I &lt;strong&gt;WILL NOT&lt;/strong&gt; TAKE ANY
+    RESPONSIBILITY IF YOU DAMAGE YOUR DATA.&lt;/li&gt;
+&lt;li&gt;In host OS, Goto the command prompt by running, &lt;strong&gt;&lt;em&gt;cmd.exe&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Navigate to the Virtualbox installation folder&lt;/li&gt;
+&lt;li&gt;Execute command:&lt;em&gt;VBoxManage modifyhd
+    X:\yourVM_DiskPath_InHost\yourVM_Disk.vdi  --resize 40960&lt;/em&gt; you
+    will see progress as below:&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://kmonsoor.files.wordpress.com/2012/05/screenshot002.png"&gt;&lt;img alt="" src="https://kmonsoor.files.wordpress.com/2012/05/screenshot002.png" title="ScreenShot002" /&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- --&gt;
+
+&lt;ul&gt;
+&lt;li&gt;If you fail with message like &lt;strong&gt;&lt;em&gt;"VBoxManage.exe: error: Resize hard
+    disk operation for this format is not impleme&lt;/em&gt;&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;em&gt;nted yet!&lt;/em&gt;&lt;/strong&gt;", you need to use this tool
+    (&lt;a href="https://forums.virtualbox.org/download/file.php?id=7579"&gt;CloneVDI.exe&lt;/a&gt;)
+    from this &lt;a href="https://forums.virtualbox.org/viewtopic.php?f=6&amp;amp;t=22422"&gt;VirtualBox
+    forum-post&lt;/a&gt;.
+    If using this tool, &lt;strong&gt;remember&lt;/strong&gt; to check "&lt;strong&gt;Increase virtual drive
+    size to&lt;/strong&gt; " with your desired size.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://forums.virtualbox.org/download/file.php?id=7579"&gt;&lt;img alt="VDI_tool" src="https://kmonsoor.files.wordpress.com/2012/05/vdi_tool.png" /&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Now, Load the ISO file to the CD/DVD drive of your virtual Linux&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;
+    [caption id="attachment_185" align="aligncenter"
+    width="375"]&lt;a href="http://kmonsoor.files.wordpress.com/2012/05/mysuse-gparted.png"&gt;&lt;img alt="" src="http://kmonsoor.files.wordpress.com/2012/05/mysuse-gparted.png" title="GParted ISO loaded" /&gt;&lt;/a&gt;
+    GParted.iso loaded on IDE Primary Master[/caption]&lt;/li&gt;
+&lt;li&gt;Boot the Guest OS; from the boot menu, select CD/DVD drive, then it
+    will be booted in GParted tiny OS,&lt;/li&gt;
+&lt;li&gt;Now the PartitionManager tool will come up automatically, like
+    below:&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://kmonsoor.files.wordpress.com/2012/05/gparted.jpg"&gt;&lt;img alt="" src="http://kmonsoor.files.wordpress.com/2012/05/gparted.jpg?w=300" title="gparted" /&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Now shrink/Grow or Move your desired partion, but be careful. Don't
+    rename them and care about your data.&lt;/li&gt;
+&lt;li&gt;Don't worry, unless you clicked &lt;strong&gt;&lt;em&gt;Apply&lt;/em&gt;&lt;/strong&gt;, nothing has happened
+    really. When you are done with moving and resizing, you have to
+    click &lt;strong&gt;&lt;em&gt;Apply&lt;/em&gt;&lt;/strong&gt;to commit the change&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://kmonsoor.files.wordpress.com/2012/05/gparted11.jpg"&gt;&lt;img alt="" src="http://kmonsoor.files.wordpress.com/2012/05/gparted11.jpg?w=300" title="gparted11" /&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;when completed, close Gparted, and then shutdown the OS&lt;/li&gt;
+&lt;li&gt;Unload the ISO aka virtual CD from virtual OS&lt;/li&gt;
+&lt;li&gt;Boot into the OS again&lt;/li&gt;
+&lt;li&gt;Now, check that if the desired partition grew or not by df command&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Thanks for visiting my blog. Please don't forget to "Like" or "+1" be
+clicking below.  Also, your suggestion or comment would be greatly
+helpful.&lt;/p&gt;
+&lt;p&gt;You may also like to encourage me by &lt;a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;amp;hosted_button_id=4H7BX94Z8MW9W"&gt;buying me a
+coffee&lt;/a&gt;.&lt;/p&gt;</summary><category term="enterprise-it"></category><category term="linux"></category><category term="opensuse"></category><category term="software"></category><category term="Step-by-step"></category><category term="suse"></category><category term="technology"></category><category term="vdi"></category><category term="virtual disk"></category><category term="virtualbox"></category><category term="vmware"></category><category term="windows 7"></category></entry><entry><title>Did you meet "Google Currents" ?</title><link href="http://blog.kmonsoor.com/did-you-meet-google-currents.html" rel="alternate"></link><updated>2012-05-18T12:59:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-05-18:did-you-meet-google-currents.html</id><summary type="html">&lt;p&gt;&lt;a href="http://kmonsoor.files.wordpress.com/2012/05/logo.png"&gt;&lt;img alt="\&amp;lt; Google currents
+logo&gt;" src="http://kmonsoor.files.wordpress.com/2012/05/logo.png" title="logo" /&gt;&lt;/a&gt;&lt;strong&gt;&lt;em&gt;If&lt;/em&gt;&lt;/strong&gt;
+you love to read news, or blog or magazine but hate to do it on your
+smartphone or tab ...... now it's time to embrace the &lt;strong&gt;&lt;em&gt;digital
+readership&lt;/em&gt;&lt;/strong&gt;. Here comes "Google Currents".&lt;/p&gt;
+&lt;p&gt;Yesterday, I accidentally met "Google Currents" and got curious. The
+description itself is hazy, not give the sense what it'll do. But wait,
+how could it explain ? It's totally new revolutionary way to engage your
+readership into fun. Just install on your iPhone or Android phone and
+see how nice a productive software can be. BTW, all "editions"(contents'
+name for &lt;strong&gt;&lt;em&gt;Currents&lt;/em&gt;&lt;/strong&gt;) are free for this application.&lt;/p&gt;
+&lt;p&gt;You can get it right away here at &lt;a href="http://www.google.com/producer/currents"&gt;Google Currents
+...&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://kmonsoor.files.wordpress.com/2012/05/current-03.jpg"&gt;&lt;img alt="A sample
+screen" src="http://kmonsoor.files.wordpress.com/2012/05/current-03.jpg" title="A sample screen" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;According to the developer&lt;/em&gt;&lt;/strong&gt;, Google Inc., it's&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Beautiful, free, favorite publications for your phone and tablet.&lt;/p&gt;
+&lt;p&gt;Google Currents delivers beautiful magazine-like editions to your
+tablet and smartphone for high speed and offline reading. Editions are
+all free and include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Publisher editions - Publishers such as Forbes, The Guardian,
+    TechCrunch, PBS, Saveur, and more have produced hundreds of
+    editions including in-depth articles, videos, fine photography,
+    slideshows, live-maps, and social streams.&lt;/li&gt;
+&lt;li&gt;Google trending editions - Google Currents uses Google search
+    technology to hourly build a set of editions tracking the five
+    most recent trending stories in categories such as world,
+    entertainment, sports, science, and more. Each story is presented
+    through a fresh edition of articles, videos, and pictures,&lt;/li&gt;
+&lt;li&gt;Your favorite blogs and feeds - Instantly, turn your Google Reader
+    subscriptions, or any of your favorite blogs/feeds into a
+    beautiful edition with a magazine feel.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Each edition is available for high speed offline reading, and provides
+quick-touch sharing. Google Currents self-adapts to differently sized
+phones and tablets, with your subscriptions synchronized across
+devices. Google Currents - a reading experience not to be missed.&lt;/p&gt;
+&lt;p&gt;Named by New York Times, The Next Web, SlashGear and more as a top 10
+Android app in 2011.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;But, according to me, it's simply awesome.&lt;/p&gt;
+&lt;h3&gt;What's cool:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Offline reading is possible&lt;/li&gt;
+&lt;li&gt;You can easily check the trends, i.e. what's goin' on web&lt;/li&gt;
+&lt;li&gt;Partitioning of the reading space that makes sense&lt;/li&gt;
+&lt;li&gt;Awesome font rendering on phone/tab screen&lt;/li&gt;
+&lt;li&gt;Already included some great subscriptions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;What's not yet:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Integration of &lt;a href="http://www.google.com/reader/"&gt;Google Reader&lt;/a&gt;
+    subscription&lt;/li&gt;
+&lt;li&gt;Why publication(aka markeing) of this great app is so poor ?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+Hey, don't forget to share your feedback and/or "Like" this post.
+
+&lt;/div&gt;
+
+&lt;p&gt;[gallery link="file" orderby="rand"]&lt;/p&gt;</summary><category term="Android"></category><category term="currents"></category><category term="google"></category><category term="iOS"></category><category term="reader"></category><category term="reading"></category><category term="software"></category><category term="web"></category></entry><entry><title>Types of people (when they don't have something):</title><link href="http://blog.kmonsoor.com/types-of-achiever.html" rel="alternate"></link><updated>2012-05-15T00:20:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-05-15:types-of-achiever.html</id><summary type="html">&lt;p&gt;"Let's think about it" ... we call them cool-head ... some call them
+looser&lt;/p&gt;
+&lt;p&gt;"Just Go, get it (not hurting others, rather bypassing)" ...
+we call them smart  ... some call them shameless&lt;/p&gt;
+&lt;p&gt;"Okay, let it come on my way"  ...  we call them luck-hunter ... some
+call them damned lazy&lt;/p&gt;
+&lt;p&gt;"Hunt down the owner, and GET it now"  ... we call them greedy  ...
+ some call them great&lt;/p&gt;
+&lt;p&gt;"I don't need it, but btw, kill the owner" ... we call them cruel ...
+some call them perfect for this world&lt;/p&gt;
+&lt;p&gt;"I don't need it" ... we call them ascetic ... but some call them
+asshole&lt;/p&gt;
+&lt;p&gt;what category i am in ?&lt;/p&gt;</summary><category term="analysis"></category><category term="feeling"></category><category term="human"></category><category term="personal"></category><category term="social"></category></entry><entry><title>কোরিয়ান থেকে বাংলা বর্ণান্তরণ (Korean to Bangla Transliteration) v. 0.6</title><link href="http://blog.kmonsoor.com/korean-to-bangla-transliteration-v06.html" rel="alternate"></link><updated>2012-04-23T23:45:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-04-23:korean-to-bangla-transliteration-v06.html</id><summary type="html">&lt;p&gt;কোরিয়ান শেখার এক পর্যায়ে কোরিয়ান থেকে বাংলায় কোনো বর্নান্তকরন বা
+Transliteration এর খুব অভাব বোধ করছিলাম. Net এ অনেক ঘাটাঘাটি করেও কিছু
+পেলাম না :(&lt;/p&gt;
+&lt;p&gt;তাই আমার মত আম-জনতা যাতে নিজে নিজে কোরিয়ান ভাষার অ-আ-ক-খ  শুরু করতে
+পারে বা অনুশীলন করতে পারে. তাই নিজেই একটা সহজবোধ্য Transliteration চার্ট
+বানানোর সিদ্ধান্ত নিলাম.&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;আলহামদুলিল্লাহ, বর্তমানে এটা (আমি মনে করি) Beta-release অবস্থায় আছে.
+কেউ এটা দেখে শুরু করলে একবারে যা-তা অবস্থায় পড়বে না, আশা করি. Image
+file গুলো Download করে Print করে নিলে আপনার সুবিধা হবে.&lt;/p&gt;
+&lt;p&gt;আপনি আমার ব্লগে পা রেখেছেন বলে ধন্যবাদ. এই ব্লগ আপনার কোনো কাজে লাগলে
+আমার খুব ভালো লাগবে. আপনার যেকোনো মতামত, পরামর্শ, গালি(!), বা প্রশংসা
+আপনি নির্দিধায় আপনি comment এ করতে পারেন.&lt;/p&gt;
+&lt;p&gt;বি:দ্র: যে শব্দগুলোর অর্থ আমার জানা আছে, সেগুলো আমি চার্টে (বন্ধনীর)
+ভিতরে উল্লেখ করে দিলাম.&lt;/p&gt;
+&lt;h1&gt;(ব্যঞ্জনবর্ণ অংশ)&lt;/h1&gt;
+&lt;p&gt;&lt;a href="http://kmonsoor.files.wordpress.com/2012/04/screenshot037.jpg"&gt;&lt;img alt="" src="http://kmonsoor.files.wordpress.com/2012/04/screenshot037.jpg" title="transliteration consonant" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1&gt;(স্বরবর্ণ অংশ)&lt;/h1&gt;
+&lt;p&gt;&lt;a href="http://kmonsoor.files.wordpress.com/2012/04/screenshot036.jpg"&gt;&lt;img alt="" src="http://kmonsoor.files.wordpress.com/2012/04/screenshot036.jpg" title="transliteration vowel" /&gt;&lt;/a&gt;&lt;/p&gt;</summary><category term="bangla"></category><category term="hangeul"></category><category term="한글"></category><category term="korean"></category><category term="transliteration"></category><category term="unofficial"></category></entry><entry><title>Tips on Craigslist posting</title><link href="http://blog.kmonsoor.com/tips-on-craigslist-posting.html" rel="alternate"></link><updated>2012-04-21T00:13:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-04-21:tips-on-craigslist-posting.html</id><summary type="html">&lt;div style="text-align:left;" dir="ltr"&gt;
+
+[![Craigslist
+logo](http://kmonsoor.files.wordpress.com/2011/07/500px-craigslist-svg.png "Craigslist.wiki")](http://kmonsoor.files.wordpress.com/2011/07/500px-craigslist-svg.png)
+
+-   **Try to give best "image"**
+    -   Don't upload big image file(s). Else Craigslist's own
+        compression will make your image too bad.
+    -   Adjust light and proper angle before you take shot. If the item
+        is a outside one like car, grill etc., utilize daylight or
+        evening time ambient light&lt;!--more--&gt;
+    -   Take snapshot with a good camera
+    -   Take picture from different angle. You can add up to 4(four)
+        images. Utilize 'em all.
+    -   Re-size the image(s) with MS paint
+    -   Crop any unnecessary portion
+    -   Now, post on to Craigslist
+    -   a blurry image can ruin your post
+    -   for any crack/scratch on your to-, use *MS Paint*'s circle,
+        arrow, line, and text to CLEARLY SHOW  that.
+-   **Secure your privacy** by giving phone number with some inside text
+    like 2 Zero 1 - 255 - Three 5 Five 4 to avoid automatic reapers. If
+    possible, use a secondary or temporary phone number. You may
+    consider to get a phone number such as, [Google
+    Voice](http://www.google.com/voice "Google Voice") number, for free.
+-   **Wait** for the right customer, Don't hurry &amp; get-down at a poor
+    offer; unless you have set an absurd price
+
+&lt;/div&gt;</summary><category term="craigslist"></category><category term="image"></category><category term="posting"></category><category term="text"></category><category term="tips"></category></entry><entry><title>No title [83]</title><link href="http://blog.kmonsoor.com/83.html" rel="alternate"></link><updated>2012-04-20T11:44:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-04-20:83.html</id><summary type="html">&lt;ul&gt;
+&lt;li&gt;be unique  &lt;/li&gt;
+&lt;li&gt;honor your reader base&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="blog"></category><category term="hit"></category><category term="more"></category></entry><entry><title>Uninstall Crappy and Slow Internet Explorer (IE) 9 : Revert back to IE 8</title><link href="http://blog.kmonsoor.com/uninstall-ie-9.html" rel="alternate"></link><updated>2012-02-01T01:55:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-02-01:uninstall-ie-9.html</id><summary type="html">&lt;div style="text-align:left;" dir="ltr"&gt;
+
+[![](http://kmonsoor.files.wordpress.com/2012/02/internet-explorer-9.jpg "internet-explorer-9")](http://kmonsoor.files.wordpress.com/2012/02/internet-explorer-9.jpg)
+
+&lt;/div&gt;
+
+&lt;div style="text-align:left;" dir="ltr"&gt;
+
+&lt;/div&gt;
+
+&lt;div style="text-align:left;" dir="ltr"&gt;
+
+&lt;/div&gt;
+
+&lt;div style="text-align:left;" dir="ltr"&gt;
+
+&lt;/div&gt;
+
+&lt;div style="text-align:left;" dir="ltr"&gt;
+
+&lt;/div&gt;
+
+&lt;div style="text-align:left;" dir="ltr"&gt;
+
+&lt;/div&gt;
+
+&lt;div style="text-align:center;" dir="ltr"&gt;
+
+   **DON'T do it from "Control Panel"\&gt;\&gt;"Programs"\&gt;\&gt;"Turn Windows
+Features on or off".**
+
+&lt;/div&gt;
+
+&lt;div style="text-align:left;" dir="ltr"&gt;
+
+-   Go to START --\&gt; "Control panel" --\&gt; "View installed updates"
+-   Now scroll down the list, look for "Windows Internet Explorer 9" in
+    "Microsoft Windows" section
+-   Double-click to Uninstall it
+-   After finishing, it's better if you restart
+-   Your previous IE 8 will be restored
+-   For more noob-friendly-details, please visit [Microsoft site,
+    here](http://windows.microsoft.com/en-US/windows7/how-do-i-install-or-uninstall-internet-explorer-9).
+
+&lt;a name="more"&gt;&lt;/a&gt;
+
+If you get trouble uninstalling IE 9 as described here, [visit
+here](http://support.microsoft.com/kb/2579295).
+
+If you can't find IE 8 yet by typing "Internet" in the START \&gt;\&gt;
+"Search for programs and files",  
+Download IE 8 from
+here: &lt;http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-8&gt;.
+Don't forget to select right language and right OS version.
+
+Install the downloaded file as usual.
+
+If you are looking for a truly faster and reliable Internet browser,
+consider using [Google Chrome](http://www.google.com/chrome?hl=en) or
+[Firefox browser (To get now, click here)](http://goo.gl/OhvkY)
+
+Thanks for visiting my blog post. If this helped you, don't forget to
+click "Like" and/or "+1" button below.
+
+&lt;/div&gt;
+
+&lt;div class="blogger-post-footer"&gt;
+
+![]()
+
+&lt;/div&gt;</summary></entry><entry><title>Windows 7 Enterprise/Ultimate "K" to "EN" (aka English): Conversion Step-by-step</title><link href="http://blog.kmonsoor.com/windows-7-k-to-en.html" rel="alternate"></link><updated>2012-01-29T12:48:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-01-29:windows-7-k-to-en.html</id><summary type="html">&lt;div dir="ltr" style="text-align:left;"&gt;
+
+&lt;span style="font-family:Verdana, sans-serif;"&gt;Ended up with Windows 7
+Enterprise in Korean language? What you are seeing, all are in Korean()
+language ?&lt;/span&gt;  
+&lt;span style="font-family:Verdana, sans-serif;"&gt;I am here to share my
+own experience. It may help you out.&lt;/span&gt;  
+&lt;span style="font-family:Verdana, sans-serif;"&gt;&lt;/span&gt;
+
+&lt;/div&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;As I work for a South
+Korean conglomerate, I had access to Windows 7 Enterprise K. So, I have
+to face a lot of trouble to make the conversion to English. As, there is
+no Microsoft's official help available, I have to find it myself. It
+would be great if I can share this with proper screen-shots of Korean
+Windows. But as I already converted, I could
+not.&lt;/span&gt;&lt;a name="more"&gt;&lt;/a&gt;&lt;span
+style="font-family:Verdana, sans-serif;"&gt;First of all, it will be best
+if you can install Windows 7 English version directly. If not possible
+at all, like your company have license only to use Korean version, or
+you purchased your laptop or PC in Korea. In those cases this post may
+help.&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-family:Verdana, sans-serif;"&gt;&lt;br /&gt;
+&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-family:Verdana, sans-serif;"&gt;I am
+&lt;strong&gt;assuming&lt;/strong&gt;that:&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-family:Verdana, sans-serif;"&gt;You have a valid license
+key or OEM VLK(Volume License Key) of Windows 7, either for Enterprise
+or for Ultimate edition.&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-family:Verdana, sans-serif;"&gt;If you don't have
+Enterprise or Ultimate edition, rather you have Home or Professional
+addition, the following method probably won't work.&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-family:Verdana, sans-serif;"&gt;&lt;br /&gt;
+&lt;/span&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;Steps:&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;Install Windows 7 K
+    on your PC; don't setup any setting if you don't understand what it
+    is saying.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;Don't install any
+    anti-virus yet. Or any other system software.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;Validate and register
+    your license. &lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;Go to Windows update.
+    And update your Windows to Service pack 1. Please avoid updating
+    Internet Explorer 8 to 9. Uncheck it.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;Now Windows will
+    restart automatically.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;Again, Go to Windows
+    update. In the optional section, you'll will see a long list of
+    language pack. Select English. Complete update. Again
+    restart.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;If your Windows 7 K
+    is not converted to Windows 7 then from Language setting choose
+    english as display language.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;Again, restart. Now
+    it should be in English. Some text still may be in Korean. Don't
+    care for it. Your life will be quite okay with that.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;Now you install
+    whatever software you want.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;if you are in trouble
+    now with MS Office Korean package, check out &lt;a href="http://kmonsoor.blogspot.com/2012/01/install-english-language-pack-of.html"&gt;my relevant
+    post.&lt;/a&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;P.S.&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-family:Verdana, sans-serif;"&gt;I don't know why
+Internet Explorer 9 don't work properly. If you face problem after
+installing it like "I.E. is not responding....","I.E. closed
+unexpectedly" etc. just uninstall that. &lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-family:Verdana, sans-serif;"&gt;But how?&lt;/span&gt;&lt;br /&gt;
+&lt;span style="font-family:Verdana, sans-serif;"&gt;&lt;a href="http://kmonsoor.blogspot.com/2012/01/uninstall-crappy-and-slow-internet.html"&gt;Please visit my
+relevant
+post.&lt;/a&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style="font-family:Verdana, sans-serif;"&gt;Thanks for reading my
+post. Please share your experience or relevant tips below. You may also
+like to encourage me by &lt;a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;amp;hosted_button_id=4H7BX94Z8MW9W"&gt;buying me a
+coffee&lt;/a&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;div class="blogger-post-footer"&gt;
+
+&lt;img alt width="1" height="1"&gt;&lt;/img&gt;
+
+&lt;/div&gt;</summary><category term="english"></category><category term="korean"></category><category term="unofficial"></category><category term="windows"></category></entry><entry><title>License of my blog posts: creative commons NonCommercial-ShareAlike</title><link href="http://blog.kmonsoor.com/my-blog-license.html" rel="alternate"></link><updated>2012-01-26T19:20:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-01-26:my-blog-license.html</id><summary type="html">&lt;p&gt;Unless I mention something else, the below license will be applied to
+all of my posts:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href="http://creativecommons.org/licenses/by-nc-sa/3.0/"&gt;&lt;img alt="Creative Commons
+License" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;by &lt;a href="kmonsoor.com"&gt;Khaled Monsoor&lt;/a&gt; is licensed under a &lt;a href="http://creativecommons.org/licenses/by-nc-sa/3.0/"&gt;Creative
+Commons Attribution-NonCommercial-ShareAlike 3.0 Unported
+License&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;</summary><category term="blog"></category><category term="license"></category><category term="post"></category></entry><entry><title>Install English (or any other) Language Pack of Microsoft Office 2007 or 2010 Enterprise (Korean or whatever version): Step by step</title><link href="http://blog.kmonsoor.com/install-english-language-pack-of-microsoft-office-2007-enterprise-korean-version-or-whatever-step-by-step.html" rel="alternate"></link><updated>2012-01-19T13:49:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2012-01-19:install-english-language-pack-of-microsoft-office-2007-enterprise-korean-version-or-whatever-step-by-step.html</id><summary type="html">&lt;p&gt;&lt;a href="http://goo.gl/QX3Yf"&gt;&lt;img alt="" src="http://www.ctccomputertraining.com/tips/Office2010Logo.jpg" /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;If you are stuck with Windows 7 in Korean package, this is not the place
+you are looking for. Plz check out my relevant post.&lt;/p&gt;
+&lt;h2&gt;[Background]&lt;/h2&gt;
+&lt;p&gt;As I have joined a giant Korean conglomerate aka group of companies, I
+have to install Office 2007 Enterprise edition Korean version. I hunted,
+searched, tested many ways. But failed.&lt;/p&gt;
+&lt;p&gt;But, now, I got it. Here's how.&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;h2&gt;[Process]&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;At first, check  of your desired language file (&lt;strong&gt;matching&lt;/strong&gt; with
+    your version of Office) &lt;a href="http://goo.gl/QX3Yf"&gt;here&lt;br /&gt;
+&lt;/a&gt;. For &lt;strong&gt;Office 2010&lt;/strong&gt;, check
+    &lt;a href="http://goo.gl/cJM8M"&gt;here&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;If it is there, voilà! You got it.&lt;/li&gt;
+&lt;li&gt;Install the downloaded exe file. As a security check, plz check the
+    publisher name if it is "Microsoft" or not. If it is “Microsoft”,
+    you have nothing to worry about security.&lt;/li&gt;
+&lt;li&gt;After completion, please restart your PC or laptop whether Windows
+    tells so or not.&lt;/li&gt;
+&lt;li&gt;Now, check using MS Office Language preference that is it set or not
+    as below:&lt;br /&gt;
+&lt;a href="http://kmonsoor.wordpress.com/2012/01/19/install-english-language-pack-of-microsoft-office-2007-enterprise-korean-version-or-whatever-step-by-step/chkofficelang/"&gt;&lt;img alt="check MS Office
+    Language" src="http://kmonsoor.files.wordpress.com/2012/01/chkofficelang.png?w=239" /&gt;&lt;/a&gt;&lt;a href="http://kmonsoor.wordpress.com/2012/01/19/install-english-language-pack-of-microsoft-office-2007-enterprise-korean-version-or-whatever-step-by-step/chkofficepref/"&gt;&lt;img alt="chkOfficePref" src="http://kmonsoor.files.wordpress.com/2012/01/chkofficepref.png?w=300" /&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Now, happily use "Office" in your desired language.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;[Credits]&lt;/h2&gt;
+&lt;p&gt;I got the link from a user comment
+&lt;a href="http://www.merawindows.com/Forums/tabid/324/forumid/89/threadid/37339/scope/posts/Default.aspx"&gt;here&lt;/a&gt;.
+Though I didn't believe at first place. But it worked.&lt;/p&gt;
+&lt;p&gt;Thank you so much for visiting my blog. If you liked it, please don't
+forget to press "Like" or "Share".  :)&lt;br /&gt;
+If you have any query, please let me know by your comment.&lt;/p&gt;
+&lt;p&gt;You may also like to encourage me by &lt;a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;amp;hosted_button_id=4H7BX94Z8MW9W"&gt;buying me a
+coffee&lt;/a&gt;.&lt;/p&gt;</summary><category term="2007"></category><category term="2010"></category><category term="arabic"></category><category term="Bangladesh"></category><category term="blog"></category><category term="Bokmål"></category><category term="brazilian"></category><category term="bulgarian"></category><category term="chinese"></category><category term="croatian"></category><category term="Czech"></category><category term="danish"></category><category term="dutch"></category><category term="english"></category><category term="estonian"></category><category term="finnish"></category><category term="free"></category><category term="french"></category><category term="german"></category><category term="greek"></category><category term="hebrew"></category><category term="hindi"></category><category term="hungarian"></category><category term="Italian"></category><category term="한글"></category><category term="언어 팩"></category><category term="정품키"></category><category term="japanese"></category><category term="Kazakh"></category><category term="korean"></category><category term="Latvian"></category><category term="Lithuanian"></category><category term="microsoft"></category><category term="Norwegian"></category><category term="office"></category><category term="Polish"></category><category term="Portuguese"></category><category term="russian"></category><category term="serbian"></category><category term="slovak"></category><category term="slovanian"></category><category term="software"></category><category term="spanish"></category><category term="swedish"></category><category term="taiwanese"></category><category term="thai"></category><category term="Turkish"></category><category term="Ukrainian"></category><category term="windows"></category></entry><entry><title>My Personal List of Awesome-yet-Free Software and Web Services</title><link href="http://blog.kmonsoor.com/awesome-yet-free.html" rel="alternate"></link><updated>2011-04-09T05:35:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2011-04-09:awesome-yet-free.html</id><summary type="html">&lt;p&gt;Throughout my computing experience since 1993, I have faced, searched,
+installed, tried, loved, hated, and uninstalled quite numerous software.
+Maybe, the number will cross thousand. The list includes pirated,
+licensed, shareware, freeware and what not. Their domain includes
+Windows *, Linux *, HP-UX 9i but (bad)luckily not Mac OS or NeXT
+platforms. I am sorry Mr. Jobs.&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;&lt;a name="more" target="_blank"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;As the sold software including licensed and shareware involve the factor
+of direct cash, they have a lot many guys (and obviously nice gals) to
+talk about their greatness. As a relatively poor guy, I could never love
+them. Rather I loved those ones which I can use legally free. Along with
+that point, here comes Linux, Java etc.&lt;/p&gt;
+&lt;p&gt;There is a great misconception in mass people, even some tech peoples,
+that the free software are "obviously" of inferior quality. That
+perception is inherently wrong. For example, web servers, research
+facilities, including NASA, just can't rely on purchased Windows for
+their mission-critical applications,&lt;a href="http://en.wikipedia.org/wiki/Linux#Servers.2C_mainframes_and_supercomputers"&gt; rather most of them are
+using&lt;/a&gt; &lt;a href="http://en.wikipedia.org/wiki/List_of_Linux_distributions"&gt;Linux
+variants&lt;/a&gt;. Not
+only for techies, now Linux
+(especially, &lt;a href="http://www.ubuntu.com/"&gt;Ubuntu&lt;/a&gt;) is quite user-friendly
+for mass people, even for your grandma.&lt;/p&gt;
+&lt;p&gt;Anyway, bragging Linux isn't point of this post. Rather I would like to
+share with you some of the awesome &lt;strong&gt;free software&lt;/strong&gt; for everyday use
+that I just &lt;strong&gt;love&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2&gt;General browsing: &lt;a href="http://www.google.com/chrome"&gt;Google Chrome&lt;/a&gt;&lt;/h2&gt;
+&lt;div&gt;
+
+&lt;div&gt;
+
+[![Logo\_Google\_Chrome](http://kmonsoor.files.wordpress.com/2011/04/google_chrome.png?w=140 "chrome")](http://kmonsoor.files.wordpress.com/2011/04/google_chrome.png)
+
+&lt;/div&gt;
+
+&lt;p&gt;It just started a new era for Internet browsers. Unmatched blitz-like
+speed with no-compromise safety is its main beauty. For giving a test
+result for this blog, I have done a little test. For loading msn.com and
+yahoo.com on my brand new laptop, Chrome(v.10) took approx. 3 seconds
+each whereas our-old-hero Firefox (v.4) took 7 seconds each. What about
+your browser? How many hours you wasted just on waiting for the webpage
+to load?&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;h2&gt;Operating system: &lt;a href="http://www.ubuntu.com/"&gt;Ubuntu&lt;/a&gt;&lt;/h2&gt;
+&lt;div&gt;
+
+&lt;div&gt;
+
+![](http://kmonsoor.files.wordpress.com/2011/04/ubuntu.png?w=200)
+
+&lt;/div&gt;
+
+&lt;p&gt;Where pirated software are reigning, you may have no headache about
+purchasing price of operating systems. But when the question comes about
+legality, such as in the case of government agencies, business or
+education institutions, they just can't use illegal one's. And Windows
+means a boat-load of cash along with almost no everyday software. Where
+much-better performer Ubuntu comes for free with its cool features and
+sexy user interface and also with a great lot of everyday software
+including &lt;a href="http://www.openoffice.org/"&gt;OpenOffice.org&lt;/a&gt;. Oh! my personal
+experience about Ubuntu? Just awesome !&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;br /&gt;
+Email service: &lt;a href="http://www.gmail.com/"&gt;Gmail.com&lt;/a&gt;&lt;br /&gt;
+&lt;/strong&gt;
+==================================================&lt;/p&gt;
+&lt;div&gt;
+
+[![](http://4.bp.blogspot.com/-voNASIAeDQc/T3iPw3AZUKI/AAAAAAAADUo/QIRgkdS5Ays/s200/Gmail_logo.png)](www.gmail.com)
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+Needless to say, simply greatest. Far ahead from other email services
+regarding user friendliness, speed, forwarding, great spam-filtering and
+a hell lot more features. Many global organizations are using that
+professionally. Personally I use different accounts for different level
+of privacy and also turned on many cool features of
+Gmail [labs](http://gmailblog.blogspot.com/2008/06/introducing-gmail-labs.html).
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;h1&gt;Reading PDF files: &lt;a href="http://blog.kowalczyk.info/software/sumatrapdf"&gt;Sumatra PDF Reader&lt;/a&gt;&lt;/h1&gt;
+&lt;div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+[![](http://4.bp.blogspot.com/-fE2lWD7a4QY/T3iaJrW34AI/AAAAAAAADV8/ghfZn_Tfe6Q/s1600/SumatraPDF.png)](http://blog.kowalczyk.info/software/sumatrapdf/free-pdf-reader.html)
+
+&lt;/div&gt;
+
+&lt;p&gt;Extremely fast to load PDF files and extremely light on memory, where on
+the other hand, the default Adobe Acrobat Reader work like a memory hog.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;h1&gt;Managing zip files:  &lt;a href="http://www.zipgenius.com/index.php?id=33"&gt;7Zip&lt;/a&gt;&lt;/h1&gt;
+&lt;div&gt;
+
+&lt;div&gt;
+
+![](http://kmonsoor.files.wordpress.com/2011/04/7zip.png?w=200)
+
+&lt;/div&gt;
+
+&lt;p&gt;Very smart and supports almost all archive files. It also has a
+nice integration (with the Right-click-menu on Windows Explorer). It’s
+very fast rather than the built-in compression-handler of Windows.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;h1&gt;Advanced Text Editing: &lt;a href="http://notepad-plus-plus.org/"&gt;Notepad ++&lt;/a&gt;&lt;/h1&gt;
+&lt;div&gt;
+
+![](http://kmonsoor.files.wordpress.com/2011/04/notepad_plus.png?w=179)
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+Haven't you ever felt that you need something basic text editing
+software which has advanced feature than the crappy Notepad software
+which comes with Windows. I always feel that way.
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+When I need:
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+Removing text-formatting from some text to paste somewhere else,
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+Edit/delete or insert Vertical block of text in a file
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+analyze some big...really big file which is basically text but size is
+like 1GB in a single file.
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+....
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+and many other operations on basic text. Not only me, a great many
+number of developers, data analysts, and who not use Notepad++
+
+&lt;/div&gt;
+
+&lt;h1&gt;(E)Mailing:  &lt;a href="http://www.mozillamessaging.com/thunderbird/"&gt;Mozilla Thunderbird&lt;/a&gt;&lt;/h1&gt;
+&lt;div&gt;
+
+&lt;div&gt;
+
+![](http://kmonsoor.files.wordpress.com/2011/04/screenshot001.png?w=190)
+
+&lt;/div&gt;
+
+&lt;p&gt;Fast and furiously smart email client. Though some
+unused glossy features of Microsoft Outlook isn't present with that, but
+I am impressed.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;h1&gt;Backup of whatever files:  &lt;a href="https://www.dropbox.com/referrals/NTc3ODQ5NDE5?src=global9"&gt;DropBox&lt;/a&gt;&lt;/h1&gt;
+&lt;div&gt;
+
+&lt;div&gt;
+
+![](http://kmonsoor.files.wordpress.com/2011/04/dropbox_logo.png?w=200)
+
+&lt;/div&gt;
+
+&lt;p&gt;Though free 2GB space isn't that much, but quite enough for personal
+documents and important pictures. And continuous, seamless
+and hassle-less device-independent file syncing service and its
+performance is just amazing.&lt;/p&gt;
+&lt;h1&gt;&lt;a href="http://imageresizer.codeplex.com/releases/view/82827"&gt;Image Resizer for Windows&lt;/a&gt;&lt;/h1&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;div&gt;
+
+![](http://kmonsoor.files.wordpress.com/2011/04/screenshot002.png?w=300)
+
+&lt;/div&gt;
+
+&lt;p&gt;Some of us daily need to resize image files easily. But only hope was
+Microsoft Paint. Another was crack-licensed ACDSee. But loading a
+full-fledged software for such a trivial task was a common but great
+pain.&lt;br /&gt;
+&lt;strong&gt;&lt;br /&gt;
+ImageResizer &lt;/strong&gt;is their lighthouse of hope. Open-source, free,
+lightweight, just add a option to right-click menu. Just right-click on
+the image and select "Resize Pictures". Select what size you want, and
+see the magic of making tiny-sized-okay-quality image.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+For the sake of brevity, here I am just sharing my favorite ones which I
+use for general computing. I would also love to know what are your
+favorites? You can share them with us by leaving some comments below. I
+may also update that in my post.
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+Thanks for visiting my blog post. If this helped you, don't forget to
+click "Like" and/or "+1" button below  :)
+
+&lt;/div&gt;</summary><category term="awesome"></category><category term="free"></category><category term="freeware"></category><category term="personal list"></category><category term="windows"></category></entry><entry><title>What is the next big ... ?</title><link href="http://blog.kmonsoor.com/what-is-the-next-big.html" rel="alternate"></link><updated>2011-02-24T15:54:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2011-02-24:what-is-the-next-big.html</id><summary type="html">&lt;div dir="ltr" style="text-align:left;"&gt;
+
+A virus is notorious  
+but easily overwhelmed by the resources of a bacteria  
+which is overwhelmed by the complexity of a fungus  
+which is overwhelmed by the thrust of a single drop of anti-fungal  
+which is overwhelmed by a splash of water  
+which is overwhelmed by a room heater
+&lt;/p&gt;
+&lt;a name="more"&gt;&lt;/a&gt;  
+which is overwhelmed by e.m.f of the electric system of the skyscraper  
+which is overwhelmed by the power-grid of the city  
+which is overwhelmed by the size of the New York city  
+which is overwhelmed by a 'tiny' splash of Atlantic  
+which is overwhelmed by the 'little' ice cubes of the Arctics  
+which is overwhelmed by a bright-shine of a sun-storm  
+which is overwhelmed by the vastness of the sun  
+which is overwhelmed by the size of a white "Dwarf"  
+which is overwhelmed by its own galaxy  
+which is overwhelmed by the number of galaxies in Universe  
+which is overwhelmed by ... ?
+
+&lt;p&gt;
+
+&lt;/div&gt;
+
+&lt;div class="blogger-post-footer"&gt;
+
+![]()
+
+&lt;/div&gt;</summary></entry><entry><title>How to install and use UNAFold or mfold rpm package in Ubuntu 10.10</title><link href="http://blog.kmonsoor.com/how-to-install-and-use-unafold-or-mfold-rpm-package-in-ubuntu-10-10.html" rel="alternate"></link><updated>2011-02-17T11:32:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2011-02-17:how-to-install-and-use-unafold-or-mfold-rpm-package-in-ubuntu-10-10.html</id><summary type="html">&lt;div dir="ltr" style="text-align:left;"&gt;
+
+I failed to install UNAFold/mfold in Ubuntu 10.10 as the supplied binary
+package was in *rpm (RedHat)* format.
+&lt;/p&gt;
+Ubuntu 10.10 can't use *rpm* files to install software directly.
+
+After doing some online resource [I found
+that](http://www.debianadmin.com/install-rpm-files-in-debian-and-ubuntu.html)
+it is possible to convert *rpm* files to *deb*(Debian) format by using
+another package alien.
+
+&lt;a name="more"&gt;&lt;/a&gt;  
+But alien isn't installed by default. So I used the command,  
+\#**sudo apt-get install alien**
+
+then checked the installation by command:   
+\#**alien**
+
+if it's okay, now to simply convert the UNAFold package:  
+\#**sudo alien \~/Downloads/unafold-3.8-1.i386.rpm**
+
+the converted one is named like 'unafold\_3.8-2\_i386.deb'
+
+now to install this package:  
+\#**sudo dpkg -i unafold\_3.8-2\_i386.deb**
+
+after installation, you can run the \*.pl scripts
+with appropriate input, like:  
+\#**perl /usr/bin/UNAFold.pl  \~/s1.seq**
+
+&lt;p&gt;
+
+&lt;/div&gt;
+
+&lt;div class="blogger-post-footer"&gt;
+
+![](https://blogger.googleusercontent.com/tracker/3906022655385600084-1997703369966281990?l=kmonsoor.blogspot.com)
+
+&lt;/div&gt;</summary></entry><entry><title>What should be called 'death' ?</title><link href="http://blog.kmonsoor.com/what-should-be-called-death.html" rel="alternate"></link><updated>2011-01-24T08:41:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2011-01-24:what-should-be-called-death.html</id><summary type="html">&lt;div style="text-align:left;" dir="ltr"&gt;
+
+[It's an draft copy, v. 0.2. Totally unwritten sections has been tagged
+in {...}][disclaimer: I am not an surgeon, doctor, ethicist,
+philosopher, or any sort of expert, and I am a fan but not affiliated
+with National Geographic Society. Except all quoted from the
+documentary, all other comments reflect my own current thinking]
+&lt;/p&gt;
+I just watched a National Geographic documentary "Moments of death". I
+am just describing its idea &amp; my thought.
+
+what is death? whom you will call 'dead'?  
+A man with stopped heart-beat, a man with non-functioning brain, a girl
+who can't response to any physical/worldly impulsion or a man who is
+totally out of his mind? Our understanding of the definition or the
+process of 'being dead' is pushing the boundaries...
+
+Do you acknowledge 'soul'? Why?
+
+The 'simple' physical process of cardio-vascular death is as follows.
+The heart stops pumping blood, the organs get shut-off one-by-one, at
+last the brain-cells, being deprived of Oxygen, raise 'panic' alarm,
+every element of brain-cell start fighting to save own-self and start
+producing toxic waste enormously, then each cell get self-destroyed.
+
+Now, if you 'shock' back the heart-beating, give external oxygen quick
+enough, then the brain-cell 'may' stuck in 'somewhere-in-middle'. The
+patient is now seems breathing, and heart is beating; but he can't sense
+or response to anything, even you cut-off any organ without anesthesia.
+Its called 'coma'. In this state, the patient is may be thinking,
+dreaming, or just 'nothing'. Why not he is dead ?
+
+{ purpose of Germany's 'house of dead' was to avoid live-burial }
+
+{ the case of the girl who totally went out-of-mind and parents wanted
+to declare her dead }
+
+{ why peoples, 'visited' around death, see light or tunnel of light }
+
+Is 'soul' really exists?  
+{experience of a 'unconscious-and-tapped-eye' open-heart-surgery
+patient who saw every steps of his surgery, even his own body and an
+unusual habit of the surgeon}
+
+{ the medical &amp; ethical boundary of the definition of 'death' }
+
+ 
+
+&lt;/div&gt;
+
+&lt;div class="blogger-post-footer"&gt;
+
+&lt;img alt width="1" height="1"&gt;&lt;/img&gt;
+
+&lt;/div&gt;</summary><category term="death"></category><category term="really"></category><category term="what"></category></entry><entry><title>what i got today on web - Concentration of Power</title><link href="http://blog.kmonsoor.com/what-i-got-today-on-web-concentration-of-power.html" rel="alternate"></link><updated>2011-01-24T06:28:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2011-01-24:what-i-got-today-on-web-concentration-of-power.html</id><summary type="html">&lt;p&gt;&lt;a href="http://whatilearnd.com/post/2827391478/concentration-of-power"&gt;what i learned today - Concentration of
+Power&lt;/a&gt;&lt;/p&gt;
+&lt;div class="blogger-post-footer"&gt;
+
+![](https://blogger.googleusercontent.com/tracker/3906022655385600084-443177430189499719?l=kmonsoor.blogspot.com)
+
+&lt;/div&gt;</summary></entry><entry><title>'Statement of Purpose' for Bioinformatics program, Memphis, TN</title><link href="http://blog.kmonsoor.com/statement-of-purpose-for-bioinformatics-program-memphis-tn.html" rel="alternate"></link><updated>2010-11-17T10:36:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2010-11-17:statement-of-purpose-for-bioinformatics-program-memphis-tn.html</id><summary type="html">&lt;div style="text-align:left;" dir="ltr"&gt;
+
+Here I published the 'Statement of Purpose' what I used for getting
+admission in Bioinformatics program of University of Memphis at
+Tennessee, USA.Writing this SOP was started while I was getting back
+home through my Aktel stuff bus. The backbone was written on my mobile
+LG KU 990 as a note. I fulfilled its 1000 characters limit.You can read
+it [here on my scribd.com space](http://www.scribd.com/doc/42898955).
+You can also download it ... But I will strongly prohibit to using just
+'***copy-paste***'. And [this
+license](http://kmonsoor.wordpress.com/2012/04/26/my-blog-license/ "License of my blog posts: creative commons NonCommercial-ShareAlike")
+applies.
+&lt;/p&gt;
+![](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)
+
+ 
+
+And please don't forget to thank me by leaving a comment and/or hit the
+***Like***buttons.
+
+[my SOP for MS in Bioinformatics in Memphis, Tennessee,
+USA](http://www.scribd.com/doc/42898955/my-SOP-for-MS-in-Bioinformatics-in-Memphis-Tennessee-USA "View my SOP for MS in Bioinformatics in Memphis, Tennessee, USA on Scribd")
+&lt;http://d1.scribdassets.com/ScribdViewer.swf?document_id=42898955&amp;access_key=key-aicorvopymu2q6ywmzl&amp;page=1&amp;viewMode=list&gt;
+
+Thanks for reading !
+
+&lt;/div&gt;
+
+&lt;div class="blogger-post-footer"&gt;
+
+&lt;img alt width="1" height="1"&gt;&lt;/img&gt;
+
+&lt;/div&gt;</summary><category term="bioinformatics"></category><category term="purpose"></category><category term="SOP"></category><category term="statement"></category><category term="USA"></category></entry><entry><title>আম্রিকা: নতুন জীবনের সাথে নতুন ব্যথা</title><link href="http://blog.kmonsoor.com/%e0%a6%86%e0%a6%ae%e0%a7%8d%e0%a6%b0%e0%a6%bf%e0%a6%95%e0%a6%be-%e0%a6%a8%e0%a6%a4%e0%a7%81%e0%a6%a8-%e0%a6%9c%e0%a7%80%e0%a6%ac%e0%a6%a8%e0%a7%87%e0%a6%b0-%e0%a6%b8%e0%a6%be%e0%a6%a5%e0%a7%87.html" rel="alternate"></link><updated>2010-09-26T14:43:00+06:00</updated><author><name>kmonsoor</name></author><id>tag:blog.kmonsoor.com,2010-09-26:%e0%a6%86%e0%a6%ae%e0%a7%8d%e0%a6%b0%e0%a6%bf%e0%a6%95%e0%a6%be-%e0%a6%a8%e0%a6%a4%e0%a7%81%e0%a6%a8-%e0%a6%9c%e0%a7%80%e0%a6%ac%e0%a6%a8%e0%a7%87%e0%a6%b0-%e0%a6%b8%e0%a6%be%e0%a6%a5%e0%a7%87.html</id><summary type="html">&lt;div style="text-align:left;" dir="ltr"&gt;
+
+&lt;div style="font-family:BNG;font-size:16px;line-height:25px;"&gt;
+
+আজ দুপুরে আম্রিকান এম্বাসী থেকে পাসপোর্ট হাতে পাইলাম; একটু ভারী, ভিসা
+স্টিকারটার জন্য।  
+সেই সাথে মনটাও একটু ভারী, সব প্রিয়জন কে একসাথে হারাবার আগাম ব্যথায়।
+
+&lt;/div&gt;
+
+&lt;div style="font-family:BNG;font-size:16px;line-height:25px;"&gt;
+
+&lt;/div&gt;
+
+&lt;div style="font-family:BNG;font-size:16px;line-height:25px;"&gt;
+
+মাথা আনন্দে গিজগিজ করছে; আর মন ব্যথায়।  
+দ্বিত্বতা মানুষের সব কিছুতেই; চাওয়া-পাওয়া সব কিছুতেই। আর মানুষেরই বা
+কি করা; মানুষের DNA টাই তো [&lt;span class="Apple-style-span"
+style="font-size:medium;"&gt;double-helix&lt;/span&gt;](http://en.wikipedia.org/wiki/DNA)&lt;span
+class="Apple-style-span" style="font-size:medium;"&gt; &lt;/span&gt;।
+
+&lt;/div&gt;
+
+&lt;div style="font-family:BNG;font-size:16px;line-height:25px;"&gt;
+
+&lt;/div&gt;
+
+&lt;div style="font-family:BNG;font-size:16px;line-height:25px;"&gt;
+
+কিছুদুর রিক্সায় এসে এরপর উঠলাম ঢাকার ঐতিহ্য ৬ নম্বর বাসে। বাস চললো ধুকে
+ধুকে। কিন্তু এখন ২৭-বছর ধরে চেনাজানা ঢাকার সবকিছুই কেমন যেনো ভাল লাগতে
+শুরু করেছে। এমনকি রাস্তার জ্যাম, ঘামে ভেজা মানুষগুলার বেছে থাকার
+সংগ্রাম, একটা বাচ্চা মেয়ের বাসে উঠে স্লিপ বিলিয়ে কাঁচা ভাষায় সাহায্য
+চাওয়া, গুলশান লেক থেকে ভেসে আসা বাতাস; সবকিছুই। মানসিক এই
+প্রতিক্রিয়াটার কি কোন নাম আছে? কি বলা যায়, &lt;span
+class="Apple-style-span" style="font-size:medium;"&gt;Pre-emptive Nostalgic
+Syndrome (PNS)&lt;/span&gt;? জ্ঞানী-গুনী কারো জানা থাকলে একটু বইলা দিয়েন।
+
+&lt;/div&gt;
+
+&lt;div style="font-family:BNG;font-size:16px;line-height:25px;"&gt;
+
+&lt;/div&gt;
+
+&lt;div style="font-family:BNG;font-size:16px;line-height:25px;"&gt;
+
+এখন হুরাতাড়া করে সব গোছাও, শপিং গুলা সারো, টিকেট কনফার্ম করো, ব্যাগ
+গোছাও, কি নিবা কি ছাড়বা ঠিক করো... ইত্যাদি ইত্যাদি।
+
+&lt;/div&gt;
+
+&lt;div style="font-family:BNG;font-size:16px;line-height:25px;"&gt;
+
+&lt;/div&gt;
+
+&lt;div style="font-family:BNG;font-size:16px;line-height:25px;"&gt;
+
+এম্বাসী ভিসা দিতে দেরি করলো অনেক; তাই তাড়াহুড়া।  
+কিন্তু এই তাড়াহুড়ার ভাঁজে-ভাঁজে কি প্রিয়জন হারানোর ব্যথা ভুলে থাকার
+অভিনয় নেই ?
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;/div&gt;
+
+&lt;div&gt;
+
+[আমার এই লেখাটা প্রথম প্রকাশিত হয় [সচলায়াতনে অতিথি
+লেখক](http://www.sachalayatan.com/guest_writer/34601) হিসেবে ]
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="blogger-post-footer"&gt;
+
+![]()
+
+&lt;/div&gt;</summary><category term="america"></category><category term="feeling"></category><category term="personal"></category></entry></feed>
