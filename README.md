@@ -1,10 +1,6 @@
----
-title: /home/kmonsoor
----
+# /home/kmonsoor
 
-# You've reached Khaled Monsoor's homepage
-
-## [Blogs](https://blog.kmonsoor.com)
+## [Personal blog](https://blog.kmonsoor.com)
 
 ## Open Source
   * [Github root](https://github.com/kmonsoor)
