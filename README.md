@@ -1,4 +1,7 @@
-# /home/kmonsoor
+---
+title: /home/kmonsoor
+layout: post
+---
 
 ## [Blogs](https://blog.kmonsoor.com)
 
